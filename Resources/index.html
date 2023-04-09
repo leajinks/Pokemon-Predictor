@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Pokémon Predictor</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+
+<body>
+    <nav class="navbar navbar-inverse">
+        <div class="container">
+            <div class="navbar-header">
+                <span class="navbar-brand" href="#">Pokémon Predictor</span>
+            </div>
+
+            <ul class="nav nav-tabs navbar-nav navbar-right">
+                <li><a class="nav-link" href="#">Home</a></li>
+                <li class="active"><a href="#">Stats</a></li>
+                <li><a href="#">Link</a></li>
+            </ul>
+
+        </div>  
+    </nav>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3 sidebar">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Pokémon Name</h3>
+                    </div>
+                    <div>
+                        <img class="img-responsive img-thumbnail" src="./img/pokeball-placeholder.png">
+                    </div>
+                </div>
+                <div>
+                    <h4>Pokémon:</h4>
+                    <select id="selDataset" onchange="optionChanged(this.value)"></select>
+                </div>
+                <br/>
+                <div>
+                    <h4>Battle Filters:</h4>
+                    <div>
+                        <input type="checkbox" id="gen" name="filter" value="gen"/>
+                        <label for="gen">Same Generation</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="tier" name="filter" value="tier"/>
+                        <label for="tier">Same Tier</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="excludelegend" name="filter" value="excludelegend"/>
+                        <label for="excludelegend">Exclude Legendary Pokémon</label>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="col-md-9">
+                <div class="row">
+                    <div class="col-md-7">
+                        <h3>Base Stats:</h3>
+                        <div id="bar"></div>
+                    </div>
+                    <div class="col-md-5">
+                        <h3>Other Info:</h3>
+                        <div id="sample-metadata" class="panel-body"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3"><h3>Wins:</h3></div>
+                    <div class="col-md-3"><h3>Losses:</h3></div>
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="./static/js/app.js"></script>
+  
+</body>
+
+</html>
