@@ -22,7 +22,7 @@ function popDrop (data) {
 // Get data for selected subject
 function getData (id, json) {
     let subjectMetadata = json.metadata[id];
-    let metadataPanel = d3.select("#sample-metadata");
+    let metadataPanel = d3.select("#other-info");
     metadataPanel.selectAll("div").remove();
     for (const [key, value] of Object.entries(subjectMetadata)) {
         if (value) metadataPanel.append("div").text(`${key}: ${value}`);
@@ -68,7 +68,7 @@ function optionChanged(id) {
             }
         };
         let data = getData(id, json)
-        Plotly.newPlot("bar", data.bar, barLayout);
+        Plotly.newPlot("stat-bars", data.bar, barLayout);
         //Plotly.newPlot("bubble", data.bubble, bubbleLayout);
     });
 }
