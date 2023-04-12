@@ -1,5 +1,6 @@
 from flask import Flask, jsonify, render_template
 import pickle
+from ml_model import X_scaler
 
 app = Flask(__name__)
 
