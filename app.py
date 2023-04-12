@@ -1,6 +1,5 @@
 from flask import Flask, jsonify, render_template
 import pickle
-from ml_model import X_scaler
 
 app = Flask(__name__)
 
@@ -12,6 +11,10 @@ def index():
 def predict(vals):
     items = vals.split(',')
     vals = [int(i) for i in items]
+
+    with open('output/scaler.h5', 'rb') as f:
+        scaler = pickle.load(f)
+
     # conversion code here as needed
 
     with open('output/model.h5', 'rb') as file:
