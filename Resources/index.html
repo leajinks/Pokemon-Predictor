@@ -14,110 +14,190 @@
 <body>
     <nav class="navbar navbar-inverse">
         <div class="container">
-            <div class="navbar-header">
-                <span class="navbar-brand" href="#">Pokémon Predictor</span>
-            </div>
+            <header class="navbar-header">
+                <strong class="navbar-brand" href="#">Pokémon Predictor</strong>
+            </header>
 
             <ul class="nav nav-tabs navbar-nav navbar-right">
                 <li><a class="nav-link" href="#">Home</a></li>
                 <li class="active"><a href="#">Stats</a></li>
                 <li><a href="#">Link</a></li>
             </ul>
-
         </div>  
     </nav>
 
     <div class="container">
-        <div class="row">
-            <div class="col-md-3 sidebar">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">
-                        <strong id="pkmn-name" class="panel-title">Pokémon Name</strong>
-                    </div>
-                    <div class="panel-body">
-                        <img id="pkmn-img" class="img-responsive" src="./img/pokeball-placeholder.png">
-                    </div>
-                    <div class="panel-footer">
-                        <strong id="pkmn-type">Type:</strong>
-                    </div>
+        <div class="col-md-3">
+            <section class="panel panel-primary">
+                <header class="panel-heading text-center">
+                    <strong id="pkmn-name" class="panel-title">Whimsicott</strong>
+                </header>
+                <div class="panel-body">
+                    <img id="pkmn-img" class="img-responsive" src="./img/0547Whimsicott.png">
                 </div>
+                <footer class="panel-footer text-center">
+                    <strong>Type:</strong>
+                    <strong id="pkmn-type" style="color: white"><span class="grass">&nbsp;Grass&nbsp;</span> <span class="fairy">&nbsp;Fairy&nbsp;</span></strong>
+                </footer>
+            </section>
 
-                <div>
-                    <strong>Pokémon:</strong>
-                    <select id="selDataset" onchange="optionChanged(this.value)"></select>
+            <div id="pkmn-selector" class="text-center">
+                <strong>Pokémon:</strong>
+                <select id="selDataset" onchange="optionChanged(this.value)"></select>
+            </div>
+        </div>
+
+        <div id="stat-bars" class="col-md-6">
+            <h3>Base Stats:</h3>
+            <div class="row row-no-gutters">
+                <strong class="col-md-3 text-right">Hit Points:&emsp;</strong>
+                <div class="col-md-9">
+                    <div id="hp" class="progress">
+                        <div class="progress-bar progress-bar-danger" role="progressbar" style="width:23.53%">
+                            60
+                        </div>
+                        <div class="outer-text"></div>
+                    </div>
                 </div>
             </div>
 
-            <div class="col-md-9">
+            <div class="row row-no-gutters">
+                <strong class="col-md-3 text-right">Attack:&emsp;</strong>
+                <div class="col-md-9">
+                    <div id="atk" class="progress">
+                        <div class="progress-bar progress-bar-danger" role="progressbar" style="width:26.27%">
+                            67
+                        </div>
+                        <div class="outer-text"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row row-no-gutters">
+                <strong class="col-md-3 text-right">Defense:&emsp;</strong>
+                <div class="col-md-9">
+                    <div id="def" class="progress">
+                        <div class="progress-bar progress-bar-warning" role="progressbar" style="width:33.33%">
+                            85
+                        </div>
+                        <div class="outer-text"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row row-no-gutters">
+                <strong class="col-md-3 text-right">Special Attack:&emsp;</strong>
+                <div class="col-md-9">
+                    <div id="spa" class="progress">
+                        <div class="progress-bar progress-bar-success" role="progressbar" style="width:30.20%">
+                            77
+                        </div>
+                        <div class="outer-text"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row row-no-gutters">
+                <strong class="col-md-3 text-right">Special Defense:&emsp;</strong>
+                <div class="col-md-9">
+                    <div id="spd" class="progress">
+                        <div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" style="width:29.41%">
+                            75
+                        </div>
+                        <div class="outer-text"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row row-no-gutters">
+                <strong class="col-md-3 text-right">Speed:&emsp;</strong>
+                <div class="col-md-9">
+                    <div id="spe" class="progress">
+                        <div class="progress-bar progress-bar-striped active" role="progressbar" style="width:45.49%">
+                            116
+                        </div>
+                        <div class="outer-text"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div id="battle-filters">
+                <button class="btn btn-primary btn-lg btn-block" data-toggle="collapse" data-target="#filter-options">Battle Filters</button>
+
+                <div id="filter-options" class="collapse">
+                    <br/>
+                    <div>
+                        <input type="checkbox" id="sameGen" name="filter" value="gen"/>
+                        <label for="sameGen">Same Generation</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="sameTier" name="filter" value="tier"/>
+                        <label for="sameTier">Same Tier</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="excludeLegend" name="filter" value="excludelegend"/>
+                        <label for="excludeLegend">Exclude Legendary Pokémon</label>
+                    </div>
+                </div>
+            </div>
+
+            <br>
+
+            <div class="panel-group">
                 <div class="row">
-                    <div class="col-md-8">
-                        <h3>Base Stats:</h3>
-                        <div id="stat-bars"></div>
+                    <div class="col-md-12">
+                        <section class="panel panel-info">
+                            <header class="panel-heading text-center">
+                                <strong class="panel-title">Other Info:</strong>
+                            </header>
+                            <div id="other-info" class="panel-body"></div>
+                        </section>
+                    </div>
+                </div>
+
+                <div class="row row-no-gutters">
+                    <div class="col-md-6">
+                        <section class="panel panel-success">
+                            <header class="panel-heading text-center">
+                                <strong class="panel-title">Wins:</strong>
+                            </header>
+                            <div class="panel-body" style="color: white">
+                                <ul id="win-list">
+                                    <li><strong class="normal">&nbsp;Normal&nbsp;</strong></li>
+                                    <li><strong class="fighting">&nbsp;Fighting&nbsp;</strong></li>
+                                    <li><strong class="flying">&nbsp;Flying&nbsp;</strong></li>
+                                    <li><strong class="poison">&nbsp;Poison&nbsp;</strong></li>
+                                    <li><strong class="ground">&nbsp;Ground&nbsp;</strong></li>
+                                    <li><strong class="rock">&nbsp;Rock&nbsp;</strong></li>
+                                    <li><strong class="bug">&nbsp;Bug&nbsp;</strong></li>
+                                    <li><strong class="ghost">&nbsp;Ghost&nbsp;</strong></li>
+                                    <li><strong class="steel">&nbsp;Steel&nbsp;</strong></li>
+                                </ul>
+                            </div>
+                        </section>
                     </div>
 
-                    <div class="col-md-4">
-                        <div id="battle-filters">
-                            <div>
-                                <button class="btn btn-primary btn-lg btn-block" data-toggle="collapse" data-target="#filter-options">Battle Filters</button>
+                    <div class="col-md-6">
+                        <section class="panel panel-danger">
+                            <header class="panel-heading text-center">
+                                <strong class="panel-title">Losses:</strong>
+                            </header>
+                            <div class="panel-body" style="color: white">
+                                <ul id="loss-list">
+                                    <li><strong class="fire">&nbsp;Fire&nbsp;</strong></li>
+                                    <li><strong class="water">&nbsp;Water&nbsp;</strong></li>
+                                    <li><strong class="grass">&nbsp;Grass&nbsp;</strong></li>
+                                    <li><strong class="electric">&nbsp;Electric&nbsp;</strong></li>
+                                    <li><strong class="psychic">&nbsp;Psychic&nbsp;</strong></li>
+                                    <li><strong class="ice">&nbsp;Ice&nbsp;</strong></li>
+                                    <li><strong class="dragon">&nbsp;Dragon&nbsp;</strong></li>
+                                    <li><strong class="dark">&nbsp;Dark&nbsp;</strong></li>
+                                    <li><strong class="fairy">&nbsp;Fairy&nbsp;</strong></li>
+                                </ul>
                             </div>
-                            <div id="filter-options" class="collapse">
-                                <div>
-                                    <input type="checkbox" id="sameGen" name="filter" value="gen"/>
-                                    <label for="sameGen">Same Generation</label>
-                                </div>
-                                <div>
-                                    <input type="checkbox" id="sameTier" name="filter" value="tier"/>
-                                    <label for="sameTier">Same Tier</label>
-                                </div>
-                                <div>
-                                    <input type="checkbox" id="excludeLegend" name="filter" value="excludelegend"/>
-                                    <label for="excludeLegend">Exclude Legendary Pokémon</label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <br/>
-
-                        <div class="panel-group horizontal-group">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="panel panel-info">
-                                        <div class="panel-heading">
-                                            <strong class="panel-title">Other Info:</strong>
-                                        </div>
-                                        <div id="other-info" class="panel-body"></div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="panel panel-success">
-                                        <div class="panel-heading">
-                                            <strong class="panel-title">Wins:</strong>
-                                        </div>
-                                        <div class="panel-body">
-                                            <ul id="win-list">
-                                                <li>None</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="col-md-6">
-                                    <div class="panel panel-danger">
-                                        <div class="panel-heading">
-                                            <strong class="panel-title">Losses:</strong>
-                                        </div>
-                                        <div class="panel-body">
-                                            <ul id="loss-list">
-                                                <li>None</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        </section>
                     </div>
                 </div>
             </div>

@@ -1,4 +1,23 @@
 .horizontal-group [class*='col-'] {
     padding-right: 0;
     padding-left: 0;
-  }
+}
+
+.normal {background-color: rgb(168, 168, 120)}
+.fighting {background-color: rgb(192, 48, 40)}
+.flying {background-color: rgb(168, 144, 240)}
+.poison {background-color: rgb(160, 64, 160)}
+.ground {background-color: rgb(224, 192, 104)}
+.rock {background-color: rgb(184, 160, 56)}
+.bug {background-color: rgb(168, 184, 32)}
+.ghost {background-color: rgb(112, 88, 152)}
+.steel {background-color: rgb(184, 184, 208)}
+.fire {background-color: rgb(240, 128, 48)}
+.water {background-color: rgb(104, 144, 240)}
+.grass {background-color: rgb(120, 200, 80)}
+.electric {background-color: rgb(248, 208, 48)}
+.psychic {background-color: rgb(248, 88, 136)}
+.ice {background-color: rgb(152, 216, 216)}
+.dragon {background-color: rgb(112, 56, 248)}
+.dark {background-color: rgb(112, 88, 72)}
+.fairy {background-color: rgb(240, 152, 176)}
