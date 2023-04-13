@@ -9,15 +9,13 @@ def index():
 
 @app.route('/predict/<poke1>/<poke2>')
 def predict(poke1, poke2):
-    #items = vals.split(',')
-    #vals = [int(i) for i in items]
 
-    # get or already have this info:
-    # type1, type2 - dummies
+    # get or already have this info for each poke:
+    # type1, type2 -> to dummies
     # HP, Attack, Defense, Sp Atk, Sp Def Speed, Generation - #s
-    # Legendary(T/F), Tier - dummies
+    # Legendary(T/F), Tier -> to dummies
 
-    # import sklearn package to do same transformations...convert dummies
+    # import sklearn or pandas to do same transformations...convert dummies here?
 
     # concat both into one long array
     x = poke1 + poke2 #...?
@@ -33,10 +31,12 @@ def predict(poke1, poke2):
     predictions = model.predict([data])
 
     # format for front end display as needed here
-    if predictions[0] == 1:
-        return jsonify('Pokemon 1 Wins!')
-    else:
-        return jsonify('Pokemon 2 Wins!')
+    return jsonify(str(predictions[0]))
+
+    # if predictions[0] == 1:
+    #    return jsonify('Pokemon 1 Wins!')
+    # else:
+    #    return jsonify('Pokemon 2 Wins!')
 
 if __name__ == "__main__":
     app.run(port=8000, debug=True)
