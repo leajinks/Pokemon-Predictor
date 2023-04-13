@@ -15,12 +15,9 @@ def predict(poke1, poke2):
     # HP, Attack, Defense, Sp Atk, Sp Def Speed, Generation - #s
     # Legendary(T/F), Tier -> to dummies
 
-    with open('output/columns.h5', 'rb') as stuff:
+    with open('Resources/X_train_cols.h5', 'rb') as stuff:
         columns = pickle.load(stuff)
-        
-
-
-
+        print(columns)
 
     # import sklearn or pandas to do same transformations...convert dummies here?
 
@@ -28,7 +25,7 @@ def predict(poke1, poke2):
     x = poke1 + poke2 #...?
 
     # Use same scaler to convert values as original training dataset
-    with open('output/scaler.h5', 'rb') as f:
+    with open('Resources/X_scaler.h5', 'rb') as f:
         scaler = pickle.load(f)
     data = scaler.transform(x)
 
