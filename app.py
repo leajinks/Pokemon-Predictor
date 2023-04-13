@@ -1,18 +1,19 @@
 from flask import Flask, jsonify, render_template
 import pickle
+import pandas as pd
 
 app = Flask(__name__)
 
 @app.route('/')
 def index():
-    with open('Resources/X_train_cols.h5', 'rb') as stuff:
-        columns = pickle.load(stuff)
-        cols = [i for i in columns[0]]
-    return jsonify(cols)
-    #return render_template('index.html')
 
-@app.route('/predict/<poke1>/<poke2>')
-def predict(poke1, poke2):
+    return render_template('index.html')
+
+@app.route('/predict')
+def predict():
+
+    poke1 = ['Water', 'Ground', [50, 48, 43, 46, 41, 60], 3, 0, 'LC']
+    poke2 = ['Grass', 'Poison', [45, 49, 49, 65, 65, 45], 1, 0, 'LC']
 
     # get or already have this info for each poke:
     # type1, type2 -> to dummies
@@ -22,20 +23,31 @@ def predict(poke1, poke2):
     with open('Resources/X_train_cols.h5', 'rb') as stuff:
         columns = pickle.load(stuff)
         cols = [i for i in columns[0]]
-        dummied = ['Type_1_First_', 'Type_2_First_', 'Generation_First_', 'Legendary_First_', 'Tier_First_', 'Type_1_Second_', 'Type_2_Second_', 'Generation_Second_', 'Tier_Second_']
+        num = ['HP_First', 'Attack_First', 'Defense_First', 'Sp_Atk_First', 'Sp_Def_First', 'Speed_First', 'HP_Second', 'Attack_Second', 'Defense_Second', 'Sp_Atk_Second', 'Sp_Def_Second', 'Speed_Second']
+        dummied = ['Type_1_First_', 'Type_2_First_', 'Generation_First_', 'Legendary_First_', 'Tier_First_', 'Type_1_Second_', 'Type_2_Second_', 'Generation_Second_', 'Legendary_Second_', 'Tier_Second_']
+        
+    # Create a dataframe with the numeric values & correct column names
+    x1 = pd.DataFrame([poke1[2]+poke2[2]], columns=num)
+   
+    # Create a dataframe with the dummied categorical values & correct column names
+    x2 = pd.DataFrame({
+        dummied[0]+poke1[0]: 1,
+        dummied[1]+poke1[1]: 1,
+        dummied[2]+str(poke1[3]): 1,
+        dummied[3]+str(poke1[4]): 1,
+        dummied[4]+poke1[5]: 1,
+        dummied[5]+poke2[0]: 1,
+        dummied[6]+poke2[1]: 1,
+        dummied[7]+str(poke2[3]): 1,
+        dummied[8]+str(poke2[4]): 1,
+        dummied[9]+poke2[5]: 1
+    }, index=[0])
+    print(x2)
 
-    # iterate through columns to check if our values match the dummies
-    for c in cols:
-       for d in dummied:
-           if c.startswith(d):
-               #clm = c.replace(d, '')
-               idk = 'hi'
-
-
-
-    # concat both into one long array
-    x = poke1 + poke2 #...?
-
+    # Join the two and fill the missing columns with zeros
+    x = pd.concat([x1, x2], axis=1)
+    x = x.reindex(columns=cols).fillna(0)
+    
     # Use same scaler to convert values as original training dataset
     with open('Resources/X_scaler.h5', 'rb') as f:
         scaler = pickle.load(f)
@@ -44,10 +56,12 @@ def predict(poke1, poke2):
     # Load trained model to make the prediction
     with open('Resources/model.h5', 'rb') as file:
         model = pickle.load(file)
-    predictions = model.predict([data])
+    predictions = model.predict(data)
 
     # format for front end display as needed here
     return jsonify(str(predictions[0]))
+
+    #return x.to_json()
 
     # if predictions[0] == 1:
     #    return jsonify('Pokemon 1 Wins!')
@@ -71,7 +85,6 @@ if __name__ == "__main__":
  'Sp_Atk_Second',
  'Sp_Def_Second',
  'Speed_Second',
- 'Did_the_first_pokemon_win', <- NOPE
  'Type_1_First_Dark',
  'Type_1_First_Dragon',
  'Type_1_First_Electric',
