@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Pokémon Predictor</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <nav class="navbar navbar-inverse">
+        <div class="container">
+            <header class="navbar-header">
+                <strong class="navbar-brand" href="#">Pokémon Predictor</strong>
+            </header>
+
+            <ul class="nav nav-tabs navbar-nav navbar-right">
+                <li><a class="nav-link" href="#">Home</a></li>
+                <li class="active"><a href="#">Stats</a></li>
+                <li><a href="#">Link</a></li>
+            </ul>
+        </div>  
+    </nav>
+
+    <div class="container">
+        <div class="pkmn1 col-md-4">
+            <div id="pkmn1-selector" class="text-center">
+                <strong>Pokémon:</strong>
+                <select id="pkmn1-selDataset" onchange="optionChanged(this.value, 1)"></select>
+            </div>
+
+            <br>
+
+            <section class="panel panel-primary">
+                <header class="panel-heading text-center">
+                    <strong id="pkmn1-name" class="panel-title">Whimsicott</strong>
+                </header>
+                <div class="panel-body">
+                    <img id="pkmn1-img" class="img-responsive" src="../Resources/img/0547Whimsicott.png">
+                </div>
+                <footer class="panel-footer text-center">
+                    <strong>Type:</strong>
+                    <strong id="pkmn1-type" style="color: white"><span class="grass">&nbsp;Grass&nbsp;</span> <span class="fairy">&nbsp;Fairy&nbsp;</span></strong>
+                </footer>
+            </section>
+
+            <h4>Base Stats:</h4>
+            <div class="row row-no-gutters">
+                <strong class="col-md-3 text-right">HP:&emsp;</strong>
+                <div class="col-md-9 stat-bar">
+                    <div id="pkmn1-hp" class="progress">
+                        <div class="progress-bar progress-bar-danger" role="progressbar" style="width:23.53%">
+                            60
+                        </div>
+                        <div class="outer-text"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row row-no-gutters">
+                <strong class="col-md-3 text-right">Atk:&emsp;</strong>
+                <div class="col-md-9 stat-bar">
+                    <div id="pkmn1-atk" class="progress">
+                        <div class="progress-bar progress-bar-danger" role="progressbar" style="width:26.27%">
+                            67
+                        </div>
+                        <div class="outer-text"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row row-no-gutters">
+                <strong class="col-md-3 text-right">Def:&emsp;</strong>
+                <div class="col-md-9 stat-bar">
+                    <div id="pkmn1-def" class="progress">
+                        <div class="progress-bar progress-bar-warning" role="progressbar" style="width:33.33%">
+                            85
+                        </div>
+                        <div class="outer-text"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row row-no-gutters">
+                <strong class="col-md-3 text-right">SpA:&emsp;</strong>
+                <div class="col-md-9 stat-bar">
+                    <div id="pkmn1-spa" class="progress">
+                        <div class="progress-bar progress-bar-success" role="progressbar" style="width:30.20%">
+                            77
+                        </div>
+                        <div class="outer-text"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row row-no-gutters">
+                <strong class="col-md-3 text-right">SpD:&emsp;</strong>
+                <div class="col-md-9 stat-bar">
+                    <div id="pkmn1-spd" class="progress">
+                        <div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" style="width:29.41%">
+                            75
+                        </div>
+                        <div class="outer-text"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row row-no-gutters">
+                <strong class="col-md-3 text-right">Spe:&emsp;</strong>
+                <div class="col-md-9 stat-bar">
+                    <div id="pkmn1-spe" class="progress">
+                        <div class="progress-bar progress-bar-striped active" role="progressbar" style="width:45.49%">
+                            116
+                        </div>
+                        <div class="outer-text"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="pkmn3 col-md-4"><span>something</span></div>
+
+        <div class="pkmn2 col-md-4">
+            <div id="pkmn2-selector" class="text-center">
+                <strong>Pokémon:</strong>
+                <select id="pkmn2-selDataset" onchange="optionChanged(this.value, 2)"></select>
+            </div>
+
+            <br>
+
+            <section class="panel panel-primary">
+                <header class="panel-heading text-center">
+                    <strong id="pkmn2-name" class="panel-title">Chandelure</strong>
+                </header>
+                <div class="panel-body">
+                    <img id="pkmn2-img" class="img-responsive" src="../Resources/img/0609Chandelure.png">
+                </div>
+                <footer class="panel-footer text-center">
+                    <strong>Type:</strong>
+                    <strong id="pkmn2-type" style="color: white"><span class="ghost">&nbsp;Ghost&nbsp;</span> <span class="fire">&nbsp;Fire&nbsp;</span></strong>
+                </footer>
+            </section>
+
+            <h4>Base Stats:</h4>
+            <div class="row row-no-gutters">
+                <strong class="col-md-3 text-right">HP:&emsp;</strong>
+                <div class="col-md-9 stat-bar">
+                    <div id="pkmn2-hp" class="progress">
+                        <div class="progress-bar progress-bar-danger" role="progressbar" style="width:23.53%">
+                            60
+                        </div>
+                        <div class="outer-text"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row row-no-gutters">
+                <strong class="col-md-3 text-right">Atk:&emsp;</strong>
+                <div class="col-md-9 stat-bar">
+                    <div id="pkmn2-atk" class="progress">
+                        <div class="progress-bar progress-bar-danger" role="progressbar" style="width:26.27%">
+                            67
+                        </div>
+                        <div class="outer-text"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row row-no-gutters">
+                <strong class="col-md-3 text-right">Def:&emsp;</strong>
+                <div class="col-md-9 stat-bar">
+                    <div id="pkmn2-def" class="progress">
+                        <div class="progress-bar progress-bar-warning" role="progressbar" style="width:33.33%">
+                            85
+                        </div>
+                        <div class="outer-text"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row row-no-gutters">
+                <strong class="col-md-3 text-right">SpA:&emsp;</strong>
+                <div class="col-md-9 stat-bar">
+                    <div id="pkmn2-spa" class="progress">
+                        <div class="progress-bar progress-bar-success" role="progressbar" style="width:30.20%">
+                            77
+                        </div>
+                        <div class="outer-text"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row row-no-gutters">
+                <strong class="col-md-4 text-right">Sp. Defense:&emsp;</strong>
+                <div class="col-md-8 stat-bar">
+                    <div id="pkmn2-spd" class="progress">
+                        <div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" style="width:29.41%">
+                            75
+                        </div>
+                        <div class="outer-text"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row row-no-gutters">
+                <strong class="col-md-3 text-right">Spe:&emsp;</strong>
+                <div class="col-md-9 stat-bar">
+                    <div id="pkmn2-spe" class="progress">
+                        <div class="progress-bar progress-bar-striped active" role="progressbar" style="width:45.49%">
+                            116
+                        </div>
+                        <div class="outer-text"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="../static/js/app.js"></script>
+    <link rel="stylesheet" type="text/css" href="../static/css/style.css">
+  
+</body>
+
+</html>

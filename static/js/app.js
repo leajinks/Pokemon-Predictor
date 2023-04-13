@@ -8,14 +8,32 @@ function init () {
     dataPromise.then((json) => {
         popDrop(json);
     });
-    optionChanged(0);
+    optionChanged(0, 1);
+    optionChanged(0, 2);
+    preparePokemon(3);
+}
+
+function preparePokemon (spot) {
+    let pokemon = d3.select("pkmn" + spot + " col-md-4");
+    console.log(spot);
+    pokemon.append("h4").text("Base Stats:");
+    const statList = ["hp", "atk", "def", "spa", "spd", "spe"];
+    statList.forEach(stat => {
+        console.log(stat);
+        let row = pokemon.append("div").attr("class", "row row-no-gutters");
+        row.append("strong").text(stat + ":\xA0");
+        let bar = row.append("div").attr("class", "col-md-9 stat-bar");
+        let progress = bar.append("div").attr("id", "pkmn" + spot + "-" + stat).attr("class", "progress");
+    });
 }
 
 // Populate dropdown menu
 function popDrop (data) {
-    let dropdown = d3.select("#selDataset");
+    let dropdownOne = d3.select("#pkmn1-selDataset");
+    let dropdownTwo = d3.select("#pkmn2-selDataset");
     for (i=0; i<data.names.length; i++) {
-        dropdown.append("option").attr("value", i).text(data.names[i]);
+        dropdownOne.append("option").attr("value", i).text(data.names[i]);
+        dropdownTwo.append("option").attr("value", i).text(data.names[i]);
     }
 }
 
@@ -55,22 +73,22 @@ function getData (id, json) {
 }
 
 // Update plots
-function optionChanged(id) {
-    const bins = [50, 100, 150, 200];
-    statList = ["hp", "atk", "def", "spa", "spd", "spe"]; // TODO: use the actual column names instead
+function optionChanged(id, spot) {
+    const bins = [70, 90, 110, 130];
+    const statList = ["hp", "atk", "def", "spa", "spd", "spe"]; // TODO: use the actual column names instead
 
     statList.forEach(stat => {
-        let statValue = Math.round(Math.random() * 255); // TODO: get the actual stat
-        let statBar = d3.select("#" + stat);
+        let statValue = Math.round((Math.random() + Math.random() + Math.random()) * (200/3)); // TODO: get the actual stat
+        let statBar = d3.select("#pkmn" + spot + "-" + stat);
         let barType = "progress-bar";
         if (statValue < bins[0]) barType += " progress-bar-danger";
         else if (statValue < bins[1]) barType += " progress-bar-warning";
         else if (statValue < bins[2]) barType += " progress-bar-success";
         else if (statValue < bins[3]) barType += " progress-bar-info";
-        if (statValue > 230 || statValue < 20) barType += " progress-bar-striped active";
+        if (!(50 < statValue && statValue < 150)) barType += " progress-bar-striped active";
 
         statBar.select("div").attr("style","width:" + (statValue/255) * 100 +"%").attr("class", barType).text(statValue);
-        if (statValue < 50) {
+        if (statValue < 10) {
             statBar.select("div").text("");
             statBar.select(".outer-text").text("\xA0" + statValue);
         }
