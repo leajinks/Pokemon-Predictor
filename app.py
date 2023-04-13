@@ -5,7 +5,11 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    with open('Resources/X_train_cols.h5', 'rb') as stuff:
+        columns = pickle.load(stuff)
+        cols = [i for i in columns[0]]
+    return jsonify(cols)
+    #return render_template('index.html')
 
 @app.route('/predict/<poke1>/<poke2>')
 def predict(poke1, poke2):
@@ -17,9 +21,17 @@ def predict(poke1, poke2):
 
     with open('Resources/X_train_cols.h5', 'rb') as stuff:
         columns = pickle.load(stuff)
-        print(columns)
+        cols = [i for i in columns[0]]
+        dummied = ['Type_1_First_', 'Type_2_First_', 'Generation_First_', 'Legendary_First_', 'Tier_First_', 'Type_1_Second_', 'Type_2_Second_', 'Generation_Second_', 'Tier_Second_']
 
-    # import sklearn or pandas to do same transformations...convert dummies here?
+    # iterate through columns to check if our values match the dummies
+    for c in cols:
+       for d in dummied:
+           if c.startswith(d):
+               #clm = c.replace(d, '')
+               idk = 'hi'
+
+
 
     # concat both into one long array
     x = poke1 + poke2 #...?
@@ -30,7 +42,7 @@ def predict(poke1, poke2):
     data = scaler.transform(x)
 
     # Load trained model to make the prediction
-    with open('output/model.h5', 'rb') as file:
+    with open('Resources/model.h5', 'rb') as file:
         model = pickle.load(file)
     predictions = model.predict([data])
 
