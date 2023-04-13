@@ -23,15 +23,13 @@ function preparePokemon (spot) {
 
     let panel = pokemon.append("section").attr("class", "panel panel-primary");
     let header = panel.append("header").attr("class", "panel-heading text-center");
-    header.append("strong").attr("id", "pkmn" + spot + "-name").attr("class", "panel-title").text("Whimsicott");
+    header.append("strong").attr("id", "pkmn" + spot + "-name").attr("class", "panel-title").text("Pokemon Name");
     let body = panel.append("div").attr("class", "panel-body");
-    body.append("img").attr("id", "pkmn" + spot + "-img").attr("class", "img-responsive").attr("src", "../Resources/img/0547Whimsicott.png");
+    body.append("img").attr("id", "pkmn" + spot + "-img").attr("class", "img-responsive").attr("src", "../Resources/img/pokeball-placeholder.png");
     let footer = panel.append("footer").attr("class", "panel-footer text-center");
     footer.append("strong").text("Type:\u00A0");
     let type = footer.append("strong").attr("id", "pkmn" + spot + "-type").attr("style", "color: white");
-    type.append("span").attr("class", "grass").text("\u00A0Grass\u00A0");
-    type.append("span").text("\u00A0");
-    type.append("span").attr("class", "fairy").text("\u00A0Fairy\u00A0");
+    type.append("span").attr("class", "normal").text("\u00A0Normal\u00A0");
 
     pokemon.append("h4").text("Base Stats:");
     const statList = {
@@ -103,16 +101,16 @@ function optionChanged(id, spot) {
     const statList = ["hp", "atk", "def", "spa", "spd", "spe"]; // TODO: use the actual column names instead
 
     statList.forEach(stat => {
-        let statValue = Math.round((Math.random() + Math.random() + Math.random()) * (200/3)); // TODO: get the actual stat
+        let statValue = Math.round((Math.random() + Math.random() + Math.random()) * (255/3)); // TODO: get the actual stat
         let statBar = d3.select("#pkmn" + spot + "-" + stat);
         let barType = "progress-bar";
         if (statValue < bins[0]) barType += " progress-bar-danger";
         else if (statValue < bins[1]) barType += " progress-bar-warning";
         else if (statValue < bins[2]) barType += " progress-bar-success";
-        else if (statValue < bins[3]) barType += " progress-bar-info";
-        if (!(50 < statValue && statValue < 150)) barType += " progress-bar-striped active";
+        else if (statValue >= bins[3]) barType += " progress-bar-info";
+        if (statValue > 150) barType += " progress-bar-striped active";
 
-        statBar.select("div").attr("style","width:" + (statValue/255) * 100 +"%").attr("class", barType).text(statValue);
+        statBar.select("div").attr("style","width:" + (statValue/255) * 100 +"%; background-color: hsl("+ Math.max(Math.min((statValue - 50) *12 / 5, 300), 0) +" , 75%, 50%)").attr("class", barType).text(statValue);
         if (statValue < 20) {
             statBar.select("div").text("");
             statBar.select(".outer-text").text("\xA0" + statValue);
