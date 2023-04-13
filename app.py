@@ -7,10 +7,14 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
 
-@app.route('/predict/<vals>')
-def predict(vals):
-    items = vals.split(',')
-    vals = [int(i) for i in items]
+@app.route('/predict/<poke1>/<poke2>')
+def predict(poke1, poke2):
+    #items = vals.split(',')
+    #vals = [int(i) for i in items]
+
+    # type1, type2 - dummies
+    # HP, Attack, Defense, Sp Atk, Sp Def Speed, Generation - #s
+    # Legendary(T/F), Tier - dummies
 
     with open('output/scaler.h5', 'rb') as f:
         scaler = pickle.load(f)
