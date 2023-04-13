@@ -8,23 +8,48 @@ function init () {
     dataPromise.then((json) => {
         popDrop(json);
     });
-    optionChanged(0, 1);
-    optionChanged(0, 2);
-    preparePokemon(3);
+    preparePokemon(1);
+    preparePokemon(2);
 }
 
 function preparePokemon (spot) {
-    let pokemon = d3.select("pkmn" + spot + " col-md-4");
-    console.log(spot);
+    let pokemon = d3.select("#pkmn" + spot);
+
+    let selector = pokemon.append("div").attr("id", "pkmn" + spot + "-selector").attr("class", "text-center");
+    selector.append("strong").text("Pokémon:\u00A0");
+    selector.append("select").attr("id", "pkmn" + spot + "-selDataset").attr("onChange", "optionChanged(this.value, " + spot + ")");
+
+    pokemon.append("br");
+
+    let panel = pokemon.append("section").attr("class", "panel panel-primary");
+    let header = panel.append("header").attr("class", "panel-heading text-center");
+    header.append("strong").attr("id", "pkmn" + spot + "-name").attr("class", "panel-title").text("Whimsicott");
+    let body = panel.append("div").attr("class", "panel-body");
+    body.append("img").attr("id", "pkmn" + spot + "-img").attr("class", "img-responsive").attr("src", "../Resources/img/0547Whimsicott.png");
+    let footer = panel.append("footer").attr("class", "panel-footer text-center");
+    footer.append("strong").text("Type:\u00A0");
+    let type = footer.append("strong").attr("id", "pkmn" + spot + "-type").attr("style", "color: white");
+    type.append("span").attr("class", "grass").text("\u00A0Grass\u00A0");
+    type.append("span").text("\u00A0");
+    type.append("span").attr("class", "fairy").text("\u00A0Fairy\u00A0");
+
     pokemon.append("h4").text("Base Stats:");
-    const statList = ["hp", "atk", "def", "spa", "spd", "spe"];
-    statList.forEach(stat => {
-        console.log(stat);
+    const statList = {
+        hp: "Hit Points",
+        atk: "Attack",
+        def: "Defense",
+        spa: "Sp. Attack",
+        spd: "Sp. Defense",
+        spe: "Speed"
+    };
+    for (stat in statList) {
         let row = pokemon.append("div").attr("class", "row row-no-gutters");
-        row.append("strong").text(stat + ":\xA0");
-        let bar = row.append("div").attr("class", "col-md-9 stat-bar");
+        row.append("strong").attr("class", "col-md-4 text-right").text(statList[stat] + ":\u2003");
+        let bar = row.append("div").attr("class", "col-md-8 stat-bar");
         let progress = bar.append("div").attr("id", "pkmn" + spot + "-" + stat).attr("class", "progress");
-    });
+        progress.append("div").attr("class", "progress-bar").attr("role", "progressbar");
+        progress.append("div").attr("class", "outer-text");
+    };
 }
 
 // Populate dropdown menu
@@ -88,7 +113,7 @@ function optionChanged(id, spot) {
         if (!(50 < statValue && statValue < 150)) barType += " progress-bar-striped active";
 
         statBar.select("div").attr("style","width:" + (statValue/255) * 100 +"%").attr("class", barType).text(statValue);
-        if (statValue < 10) {
+        if (statValue < 20) {
             statBar.select("div").text("");
             statBar.select(".outer-text").text("\xA0" + statValue);
         }
