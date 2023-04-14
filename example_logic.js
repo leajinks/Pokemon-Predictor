@@ -1,10 +1,6 @@
 function buttonPressed(poke1, poke2){
-    //poke1 = poke1['type_1_first', 'type_2_first', 'HP_first', ...etc]
-    //poke2 = poke2['type_1_second', 'type_2_second', 'HP_second', ...etc]
-
-    // poke1 = ['Water', 'Ground', [50, 48, 43, 46, 41, 60], 3, 0, 'LC']
-    // poke2 = ['Grass', 'Poison', [45, 49, 49, 65, 65, 45], 1, 0, 'LC']
-    
+    //FYI: poke1 = string name of left side dropdown pokemon name
+    //FYI: poke2 = string name of right side dropdown pokemon name
     let url = `/predict/${poke1}/${poke2}`
 
     fetch(url).then(response => response.json()).then(
