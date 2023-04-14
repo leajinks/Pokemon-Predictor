@@ -2,14 +2,19 @@
 from flask import Flask, jsonify, render_template
 import pickle
 import pandas as pd
-import sqlalchemy
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import Session
-from sqlalchemy import create_engine, func
+from sqlalchemy import create_engine
 
 # Formatted column names
 num = ['HP_First', 'Attack_First', 'Defense_First', 'Sp_Atk_First', 'Sp_Def_First', 'Speed_First', 'HP_Second', 'Attack_Second', 'Defense_Second', 'Sp_Atk_Second', 'Sp_Def_Second', 'Speed_Second']
 dummied = ['Type_1_First_', 'Type_2_First_', 'Generation_First_', 'Legendary_First_', 'Tier_First_', 'Type_1_Second_', 'Type_2_Second_', 'Generation_Second_', 'Legendary_Second_', 'Tier_Second_']
+
+stats = ['HP_', 'Attack_', 'Defense_', 'Sp_Atk_', 'Sp_Def_', 'Speed_']
+which = ['First', 'Second']
+dummy = ['Type_1_', 'Type_2_', 'Generation_', 'Legendary_', 'Tier_']
+
+
 
 engine = create_engine("sqlite:///Resources/pokemon.sqlite")
 Base = automap_base()
@@ -33,7 +38,12 @@ def predict():
     # type1, type2 -> to dummies
     # HP, Attack, Defense, Sp Atk, Sp Def Speed, Generation - #s
     # Legendary(T/F), Tier -> to dummies
-    sel = ['Type_1_First', 'Type_2_First', 'HP_First', 'Attack_First', 'Defense_First', 'Sp_Atk_First', 'Sp_Def_First', 'Speed_First', 'Generation_First', 'Legendary_First', 'Tier_First']
+    #sel = ['Type_1_First', 'Type_2_First', 'HP_First', 'Attack_First', 'Defense_First', 'Sp_Atk_First', 'Sp_Def_First', 'Speed_First', 'Generation_First', 'Legendary_First', 'Tier_First']
+    sel = []
+    for s in stats:
+        sel.append(s+which[0])
+    for d in dummy:
+        sel.append(d+which[0])
     testp1 = 'Bulbasaur'
     testp2 = 'Charmeleon'
 
@@ -84,9 +94,9 @@ def predict():
     predictions = model.predict(data)
 
     # Return results
-    return jsonify(str(predictions[0]))
+    #return jsonify(str(predictions[0]))
 
-    #return x.to_json()
+    return x.to_json()
 
     # if predictions[0] == 1:
     #    return jsonify('Pokemon 1 Wins!')
