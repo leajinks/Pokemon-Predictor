@@ -33,8 +33,8 @@ def index():
 def predict(poke1, poke2):
 
     # Test pokemon to run
-    poke1 = 'Mothim'
-    poke2 = 'Charmeleon'
+    poke2 = 'Mothim'
+    poke1 = 'Pikachu'
     
     # Create list of the columns we want to query
     sel = []
@@ -48,11 +48,9 @@ def predict(poke1, poke2):
     p1 = engine.execute(f'SELECT {sel[0]}, {sel[1]}, {sel[2]}, {sel[3]}, {sel[4]}, {sel[5]}, {sel[6]}, {sel[7]}, {sel[8]}, {sel[9]}, {sel[10]} FROM pokemon WHERE First_Name="{poke1}"').first()
     p2 = engine.execute(f'SELECT {sel[0]}, {sel[1]}, {sel[2]}, {sel[3]}, {sel[4]}, {sel[5]}, {sel[6]}, {sel[7]}, {sel[8]}, {sel[9]}, {sel[10]} FROM pokemon WHERE First_Name="{poke2}"').first()
     
-    p = session.query(*sel).filter(pokemon.First_Name==poke1).first()
+    #p = session.query(*sel).filter(pokemon.First_Name==poke1).first()
 
     session.close()
-    print(p1)
-    print(p)
 
     # Get original format of training columns
     with open('Resources/X_train_cols.h5', 'rb') as stuff:
