@@ -1,30 +1,66 @@
+# Import dependencies
 from flask import Flask, jsonify, render_template
 import pickle
 import pandas as pd
+from sqlalchemy.ext.automap import automap_base
+from sqlalchemy.orm import Session
+from sqlalchemy import create_engine
 
+# Formatted column names
+num = ['HP_First', 'Attack_First', 'Defense_First', 'Sp_Atk_First', 'Sp_Def_First', 'Speed_First', 'HP_Second', 'Attack_Second', 'Defense_Second', 'Sp_Atk_Second', 'Sp_Def_Second', 'Speed_Second']
+dummied = ['Type_1_First_', 'Type_2_First_', 'Generation_First_', 'Legendary_First_', 'Tier_First_', 'Type_1_Second_', 'Type_2_Second_', 'Generation_Second_', 'Legendary_Second_', 'Tier_Second_']
+
+stats = ['HP_', 'Attack_', 'Defense_', 'Sp_Atk_', 'Sp_Def_', 'Speed_']
+which = ['First', 'Second']
+dummy = ['Type_1_', 'Type_2_', 'Generation_', 'Legendary_', 'Tier_']
+
+
+
+engine = create_engine("sqlite:///Resources/pokemon.sqlite")
+Base = automap_base()
+Base.prepare(engine, reflect=True)
+
+pokemon = Base.classes.pokemon
+
+# Create app
 app = Flask(__name__)
 
+# Render webpage
 @app.route('/')
 def index():
-
     return render_template('index.html')
 
+# Get predictions
 @app.route('/predict')
 def predict():
-
-    poke1 = ['Water', 'Ground', [50, 48, 43, 46, 41, 60], 3, 0, 'LC']
-    poke2 = ['Grass', 'Poison', [45, 49, 49, 65, 65, 45], 1, 0, 'LC']
-
+    
     # get or already have this info for each poke:
     # type1, type2 -> to dummies
     # HP, Attack, Defense, Sp Atk, Sp Def Speed, Generation - #s
     # Legendary(T/F), Tier -> to dummies
+    #sel = ['Type_1_First', 'Type_2_First', 'HP_First', 'Attack_First', 'Defense_First', 'Sp_Atk_First', 'Sp_Def_First', 'Speed_First', 'Generation_First', 'Legendary_First', 'Tier_First']
+    sel = []
+    for s in stats:
+        sel.append(s+which[0])
+    for d in dummy:
+        sel.append(d+which[0])
+    testp1 = 'Bulbasaur'
+    testp2 = 'Charmeleon'
 
+    session = Session(engine)
+    p1 = engine.execute(f'SELECT {sel[0]}, {sel[1]}, {sel[2]}, {sel[3]}, {sel[4]}, {sel[5]}, {sel[6]}, {sel[7]}, {sel[8]}, {sel[9]}, {sel[10]} FROM pokemon WHERE First_Name="{testp1}"').first()
+    p2 = engine.execute(f'SELECT {sel[0]}, {sel[1]}, {sel[2]}, {sel[3]}, {sel[4]}, {sel[5]}, {sel[6]}, {sel[7]}, {sel[8]}, {sel[9]}, {sel[10]} FROM pokemon WHERE First_Name="{testp2}"').first()
+    session.close()
+    print(p1, p2)
+    print(type(p1))
+    # sample manual data
+    poke2 = ['Water', 'Ground', [50, 48, 43, 46, 41, 60], 3, 0, 'LC']
+    poke1 = ['Grass', 'Poison', [45, 49, 49, 65, 65, 45], 1, 0, 'LC']
+
+    # Get original format of training columns
     with open('Resources/X_train_cols.h5', 'rb') as stuff:
         columns = pickle.load(stuff)
-        cols = [i for i in columns[0]]
-        num = ['HP_First', 'Attack_First', 'Defense_First', 'Sp_Atk_First', 'Sp_Def_First', 'Speed_First', 'HP_Second', 'Attack_Second', 'Defense_Second', 'Sp_Atk_Second', 'Sp_Def_Second', 'Speed_Second']
-        dummied = ['Type_1_First_', 'Type_2_First_', 'Generation_First_', 'Legendary_First_', 'Tier_First_', 'Type_1_Second_', 'Type_2_Second_', 'Generation_Second_', 'Legendary_Second_', 'Tier_Second_']
+    cols = [i for i in columns[0]]
         
     # Create a dataframe with the numeric values & correct column names
     x1 = pd.DataFrame([poke1[2]+poke2[2]], columns=num)
@@ -42,7 +78,6 @@ def predict():
         dummied[8]+str(poke2[4]): 1,
         dummied[9]+poke2[5]: 1
     }, index=[0])
-    print(x2)
 
     # Join the two and fill the missing columns with zeros
     x = pd.concat([x1, x2], axis=1)
@@ -58,16 +93,17 @@ def predict():
         model = pickle.load(file)
     predictions = model.predict(data)
 
-    # format for front end display as needed here
-    return jsonify(str(predictions[0]))
+    # Return results
+    #return jsonify(str(predictions[0]))
 
-    #return x.to_json()
+    return x.to_json()
 
     # if predictions[0] == 1:
     #    return jsonify('Pokemon 1 Wins!')
     # else:
     #    return jsonify('Pokemon 2 Wins!')
 
+# Run app
 if __name__ == "__main__":
     app.run(port=8000, debug=True)
 
