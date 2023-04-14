@@ -81,14 +81,24 @@ function preparePokemon (spot) {
 
 function createBattleButton () {
     let buttonBox = d3.select("#battle");
-    let pkmnOne = buttonBox.append("h2").attr("class", "text-left");
-    pkmnOne.append("span").attr("id", "battle-pkmn1-name");
-    buttonBox.append("h3").attr("class", "text-center").text("VS");
-    let pkmnTwo = buttonBox.append("h2").attr("class", "text-right");
-    pkmnTwo.append("span").attr("id", "battle-pkmn2-name");
+    let pkmnOne = buttonBox.append("h2")
+        .attr("class", "text-left");
+    pkmnOne.append("span")
+        .attr("id", "battle-pkmn1-name");
+    buttonBox.append("h3")
+        .attr("class", "text-center")
+        .text("VS");
+    let pkmnTwo = buttonBox.append("h2")
+        .attr("class", "text-right");
+    pkmnTwo.append("span")
+        .attr("id", "battle-pkmn2-name");
     buttonBox.append("br");
     buttonBox.append("br");
-    let button = buttonBox.append("button").attr("type", "button").attr("id", "battle-button").attr("class", "btn btn-danger btn-lg center-block");
+    let button = buttonBox.append("button")
+        .attr("type", "button")
+        .attr("id", "battle-button")
+        .attr("class", "btn btn-lg center-block")
+        .attr("onclick", `combat()`);
     button.append("h1").text("\u00A0BATTLE!!!\u00A0");
 }
 
@@ -104,6 +114,34 @@ function popDrop (data) {
             .attr("value", i)
             .text(data[i].Name);
     }
+}
+
+function combat () {
+    let pkmnOne = document.querySelector("#pkmn1-name").textContent;
+    let pkmnTwo = document.querySelector("#pkmn2-name").textContent;
+    let url = `/predict/${pkmnOne}/${pkmnTwo}`
+    fetch(url).then(response => response.json()).then(
+        json => {
+            console.log(json);
+            /*if(json[0] == 1){
+                document.getElementById('poke1')
+                //etc, do something or call some function to highlight winner here
+            } else {
+                document.getElementById('poke2')
+                //etc, do something or call some function to highlight winner here
+            }*/
+        }
+    )
+    let victor = Math.ceil(Math.random() * 2); // TODO: send names to Flask and get back the winner
+    d3.select("#pkmn1-panel")
+        .attr("class", "panel panel-default");
+    d3.select("#pkmn2-panel")
+        .attr("class", "panel panel-default");
+    d3.select(`#pkmn${victor}-panel`)
+        .attr("class", "panel panel-default panel-victor");
+    d3.select("#winner-tag")
+        .attr("class", `blink victor${victor}`)
+        .text(`${victor === 1 ? "\u2B9C " : ""}WINNER${victor === 1 ? "" : " \u2B9E"}`);
 }
 
 // Get data for selected subject
@@ -147,17 +185,17 @@ function popDrop (data) {
 }*/
 
 // Update panels
-function optionChanged(id, spot) {
+function optionChanged(id, spot) { // TODO: reset winner tag
+    let name = data[id].Name;
     d3.select(`#pkmn${spot}-name`)
-        .text(data[id].Name);
+        .text(name);
 
     d3.select(`#battle-pkmn${spot}-name`)
-        .text(`\u2002${data[id].Name}\u2002`);
+        .text(`\u2002${name}\u2002`);
 
-    console.log(`../Resources/img/pkmn-artwork/${data[id].Name.toLowerCase()}.png`);
 
     d3.select(`#pkmn${spot}-img`)
-        .attr("src", `../Resources/img/pkmn-artwork/${data[id].Name.toLowerCase()}.png`);
+        .attr("src", `../static/img/pkmn-artwork/${name.toLowerCase()}.png`);
 
     let type = d3.select(`#pkmn${spot}-type`);
     type.selectAll("span")

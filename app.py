@@ -33,8 +33,8 @@ def index():
 def predict(poke1, poke2):
 
     # Test pokemon to run
-    poke1 = 'Mothim'
-    poke2 = 'Charmeleon'
+    # poke1 = 'Mothim'
+    # poke2 = 'Charmeleon'
     
     # Create list of the columns we want to query
     sel = []
