@@ -18,3 +18,17 @@
 .Fairy {background-color: rgb(240, 152, 184)}
 
 .stat-bar {margin-bottom: -15px}
+
+#pkmn1-panel {background: royalblue}
+#pkmn2-panel {background: firebrick}
+#battle-pkmn1-name {background-color: royalblue; color: white}
+#battle-pkmn2-name {background-color: firebrick; color: white}
+#battle-button {background-color: indigo; color: white}
+#pkmn1-img {
+    -moz-transform: scaleX(-1);
+    -o-transform: scaleX(-1);
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+    filter: FlipH;
+    -ms-filter: "FlipH";
+}

@@ -16,6 +16,7 @@ function init () {
     /*dataPromise.then((json) => {
         popDrop(json);
     });*/
+    createBattleButton();
     preparePokemon(1);
     preparePokemon(2);
     popDrop(data);
@@ -36,7 +37,8 @@ function preparePokemon (spot) {
     pokemon.append("br");
 
     let panel = pokemon.append("section")
-        .attr("class", "panel panel-primary");
+        .attr("id", `pkmn${spot}-panel`)
+        .attr("class", "panel panel-default");
     let header = panel.append("header")
         .attr("class", "panel-heading text-center");
     header.append("strong")
@@ -75,6 +77,19 @@ function preparePokemon (spot) {
     };
 
     optionChanged(0, spot);
+}
+
+function createBattleButton () {
+    let buttonBox = d3.select("#battle");
+    let pkmnOne = buttonBox.append("h2").attr("class", "text-left");
+    pkmnOne.append("span").attr("id", "battle-pkmn1-name");
+    buttonBox.append("h3").attr("class", "text-center").text("VS");
+    let pkmnTwo = buttonBox.append("h2").attr("class", "text-right");
+    pkmnTwo.append("span").attr("id", "battle-pkmn2-name");
+    buttonBox.append("br");
+    buttonBox.append("br");
+    let button = buttonBox.append("button").attr("type", "button").attr("id", "battle-button").attr("class", "btn btn-danger btn-lg center-block");
+    button.append("h1").text("\u00A0BATTLE!!!\u00A0");
 }
 
 // Populate dropdown menu
@@ -135,6 +150,9 @@ function popDrop (data) {
 function optionChanged(id, spot) {
     d3.select(`#pkmn${spot}-name`)
         .text(data[id].Name);
+
+    d3.select(`#battle-pkmn${spot}-name`)
+        .text(`\u2002${data[id].Name}\u2002`);
 
     console.log(`../Resources/img/pkmn-artwork/${data[id].Name.toLowerCase()}.png`);
 
