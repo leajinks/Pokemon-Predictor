@@ -32,7 +32,6 @@ function preparePokemon (spot) {
     dropdown = selector.append("select")
         .attr("id", `pkmn${spot}-selDataset`)
         .attr("onChange", `optionChanged(this.value, ${spot})`);
-    dropdown.append("option").text("-- Choose a Pokémon --");
 
     pokemon.append("br");
 
@@ -42,14 +41,12 @@ function preparePokemon (spot) {
         .attr("class", "panel-heading text-center");
     header.append("strong")
         .attr("id", `pkmn${spot}-name`)
-        .attr("class", "panel-title")
-        .text("Pokemon Name");
+        .attr("class", "panel-title");
     let body = panel.append("div")
         .attr("class", "panel-body");
     body.append("img")
         .attr("id", `pkmn${spot}-img`)
-        .attr("class", "img-responsive")
-        .attr("src", "../Resources/img/amaura.png");
+        .attr("class", "img-responsive");
     let footer = panel.append("footer")
         .attr("class", "panel-footer text-center");
     footer.append("strong")
@@ -76,6 +73,8 @@ function preparePokemon (spot) {
         progress.append("div")
             .attr("class", "outer-text");
     };
+
+    optionChanged(0, spot);
 }
 
 // Populate dropdown menu
@@ -93,7 +92,7 @@ function popDrop (data) {
 }
 
 // Get data for selected subject
-function getData (id, json) {
+/*function getData (id, json) {
     let subjectMetadata = json.metadata[id];
     let metadataPanel = d3.select("#other-info");
     metadataPanel.selectAll("div")
@@ -130,12 +129,17 @@ function getData (id, json) {
         bubble: bubble
     };
     return data;
-}
+}*/
 
-// Update plots
+// Update panels
 function optionChanged(id, spot) {
     d3.select(`#pkmn${spot}-name`)
         .text(data[id].Name);
+
+    console.log(`../Resources/img/pkmn-artwork/${data[id].Name.toLowerCase()}.png`);
+
+    d3.select(`#pkmn${spot}-img`)
+        .attr("src", `../Resources/img/pkmn-artwork/${data[id].Name.toLowerCase()}.png`);
 
     let type = d3.select(`#pkmn${spot}-type`);
     type.selectAll("span")
