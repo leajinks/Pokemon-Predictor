@@ -142,16 +142,16 @@ function popDrop (data) {
 
 // Predict the winner
 function combat () {
+    d3.select("#pkmn1-panel")
+        .attr("class", "panel panel-default");
+    d3.select("#pkmn2-panel")
+        .attr("class", "panel panel-default");
     let pkmnOne = document.querySelector("#pkmn1-name").textContent;
     let pkmnTwo = document.querySelector("#pkmn2-name").textContent;
     let url = `/predict/${pkmnOne}/${pkmnTwo}`
     fetch(url).then(response => response.json()).then(
         didOneWin => {
             let victor = 2 - Number(didOneWin);
-            d3.select("#pkmn1-panel")
-                .attr("class", "panel panel-default");
-            d3.select("#pkmn2-panel")
-                .attr("class", "panel panel-default");
             d3.select(`#pkmn${victor}-panel`)
                 .attr("class", "panel panel-default panel-victor");
             d3.select("#winner-tag")
