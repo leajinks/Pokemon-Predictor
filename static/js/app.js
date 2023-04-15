@@ -13,15 +13,13 @@ init();
 
 // Initialize page
 function init () {
-    /*dataPromise.then((json) => {
-        popDrop(json);
-    });*/
     createBattleButton();
     preparePokemon(1);
     preparePokemon(2);
     popDrop(data);
 }
 
+// Set up a spot for a combatant in one of the specified locations
 function preparePokemon (spot) {
     let pokemon = d3.select(`#pkmn${spot}`);
 
@@ -57,10 +55,11 @@ function preparePokemon (spot) {
         .attr("id", `pkmn${spot}-type`)
         .attr("style", "color: white");
 
-    pokemon.append("h4")
+    let statBox = d3.select(`#pkmn${spot}-stat-box`);
+    statBox.append("h4")
         .text("Base Stats:");
     for (stat in statList) {
-        let row = pokemon.append("div")
+        let row = statBox.append("div")
             .attr("class", "row row-no-gutters");
         row.append("strong")
             .attr("class", "col-md-3 text-right")
@@ -75,6 +74,8 @@ function preparePokemon (spot) {
         progress.append("div")
             .attr("class", "outer-text");
     };
+
+    createTriviaPanel(spot);
 
     optionChanged(0, spot);
 }
@@ -102,6 +103,29 @@ function createBattleButton () {
     button.append("h1").text("\u00A0BATTLE!!!\u00A0");
 }
 
+function createTriviaPanel (spot) {
+    let trivia = d3.select(`#pkmn${spot}-trivia`);
+    let panel = trivia.append("section")
+        .attr("id", `pkmn${spot}-trivia-panel`)
+        .attr("class", "panel panel-info");
+    let header = panel.append("header")
+        .attr("class", "panel-heading text-center");
+    header.append("strong")
+        .attr("class", "panel-title")
+        .text("Trivia");
+    let body = panel.append("div")
+        .attr("class", "panel-body");
+    let gen = body.append("div");
+    gen.append("strong").text("Generation:\u00A0");
+    gen.append("span").attr("class", "Generation");
+    let legend = body.append("div");
+    legend.append("strong").text("Legendary:\u00A0");
+    legend.append("span").attr("class", "Legendary");
+    let tier = body.append("div");
+    tier.append("strong").text("Smogon Tier:\u00A0");
+    tier.append("span").attr("class", "Tier");
+}
+
 // Populate dropdown menu
 function popDrop (data) {
     let dropdownOne = d3.select("#pkmn1-selDataset");
@@ -116,83 +140,43 @@ function popDrop (data) {
     }
 }
 
+// Predict the winner
 function combat () {
-    let pkmnOne = document.querySelector("#pkmn1-name").textContent;
-    let pkmnTwo = document.querySelector("#pkmn2-name").textContent;
-    let url = `/predict/${pkmnOne}/${pkmnTwo}`
-    fetch(url).then(response => response.json()).then(
-        json => {
-            console.log(json);
-            /*if(json[0] == 1){
-                document.getElementById('poke1')
-                //etc, do something or call some function to highlight winner here
-            } else {
-                document.getElementById('poke2')
-                //etc, do something or call some function to highlight winner here
-            }*/
-        }
-    )
-    let victor = Math.ceil(Math.random() * 2); // TODO: send names to Flask and get back the winner
     d3.select("#pkmn1-panel")
         .attr("class", "panel panel-default");
     d3.select("#pkmn2-panel")
         .attr("class", "panel panel-default");
-    d3.select(`#pkmn${victor}-panel`)
-        .attr("class", "panel panel-default panel-victor");
-    d3.select("#winner-tag")
-        .attr("class", `blink victor${victor}`)
-        .text(`${victor === 1 ? "\u2B9C " : ""}WINNER${victor === 1 ? "" : " \u2B9E"}`);
+    let pkmnOne = document.querySelector("#pkmn1-name").textContent;
+    let pkmnTwo = document.querySelector("#pkmn2-name").textContent;
+    let url = `/predict/${pkmnOne}/${pkmnTwo}`
+    fetch(url).then(response => response.json()).then(
+        didOneWin => {
+            let victor = 2 - Number(didOneWin);
+            d3.select(`#pkmn${victor}-panel`)
+                .attr("class", "panel panel-default panel-victor");
+            d3.select("#winner-tag")
+                .attr("class", `blink victor${victor}`)
+                .text(`${victor === 1 ? "\u2B9C " : ""}WINNER${victor === 1 ? "" : " \u2B9E"}`);
+        }
+    )
 }
 
-// Get data for selected subject
-/*function getData (id, json) {
-    let subjectMetadata = json.metadata[id];
-    let metadataPanel = d3.select("#other-info");
-    metadataPanel.selectAll("div")
-        .remove();
-    for (const [key, value] of Object.entries(subjectMetadata)) {
-        if (value) metadataPanel.append("div")
-            .text(`${key}: ${value}`);
-    }
-
-    let bar = [{
-        type: "bar",
-        x: json.samples[id].sample_values.slice(0,10),
-        y: json.samples[id].otu_ids.slice(0,10)
-            .map((element) => `OTU ${element}`),
-        text: json.samples[id].otu_labels.slice(0,10)
-            .map((element) => element.replaceAll(";","<br>")),
-        orientation: "h"
-    }];
-
-    let bubble = [{
-        mode: "markers",
-        x: json.samples[id].otu_ids,
-        y: json.samples[id].sample_values,
-        marker: {
-            size: json.samples[id].sample_values,
-            color: json.samples[id].otu_ids
-        },
-        text: json.samples[id].otu_labels
-            .map((element) => element.replaceAll(";","<br>"))
-    }];
-
-    let data = {
-        bar: bar,
-        bubble: bubble
-    };
-    return data;
-}*/
-
 // Update panels
-function optionChanged(id, spot) { // TODO: reset winner tag
+function optionChanged(id, spot) {
+    // Reset winner tag
+    d3.select("#pkmn1-panel")
+        .attr("class", "panel panel-default");
+    d3.select("#pkmn2-panel")
+        .attr("class", "panel panel-default");
+    d3.select("#winner-tag")
+        .attr("class", "")
+        .text("\u00A0");
+
     let name = data[id].Name;
     d3.select(`#pkmn${spot}-name`)
         .text(name);
-
     d3.select(`#battle-pkmn${spot}-name`)
         .text(`\u2002${name}\u2002`);
-
 
     d3.select(`#pkmn${spot}-img`)
         .attr("src", `../static/img/pkmn-artwork/${name.toLowerCase()}.png`);
@@ -237,19 +221,10 @@ function optionChanged(id, spot) { // TODO: reset winner tag
             .text("");
     });
 
-    /*dataPromise.then((json) => {
-        let barLayout = {
-            yaxis: {
-                autorange: "reversed"
-            }
-        };
-        let bubbleLayout = {
-            xaxis: {
-                title: "OTU ID"
-            }
-        };
-        let data = getData(id, json)
-        //Plotly.newPlot("stat-bars", data.bar, barLayout);
-        //Plotly.newPlot("bubble", data.bubble, bubbleLayout);
-    });*/
+    let tidbits = ["Generation", "Legendary", "Tier"];
+    tidbits.forEach(field => {
+        d3.select(`#pkmn${spot}-trivia`)
+            .select(`.${field}`)
+            .text(data[id][field]);
+    });
 }

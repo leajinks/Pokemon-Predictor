@@ -1,3 +1,11 @@
+.navbar-brand {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    margin:0 auto;
+    font-size: xx-large;
+}
+
 /* Side Panels */
 .panel-victor > .panel-heading {
     background-image: none;
@@ -35,7 +43,16 @@
 .Dark {background-color: rgb(112, 88, 72)}
 .Fairy {background-color: rgb(240, 152, 184)}
 
+/* Additional Info */
 .stat-bar {margin-bottom: -15px}
+#pkmn1-trivia-panel {
+    margin-left: -20px;
+    margin-top: 45px
+}
+#pkmn2-trivia-panel {
+    margin-right: -20px;
+    margin-top: 45px
+}
 
 /* Blinking Winner Tag */
 #winner-tag {
@@ -55,14 +72,16 @@
 /* Battle Stuff */
 #battle-pkmn1-name {
     background-color: royalblue;
-    color: white
+    color: white;
 }
 #battle-pkmn2-name {
     background-color: firebrick;
-    color: white
+    color: white;
 }
 #battle-button {
     background-color: rebeccapurple;
     color: white;
 }
-#battle-button > h1 {margin-top: 10px;}
+#battle-button > h1 {margin-top: 10px}
+
+#tiering-overview > h3 {margin-top: 5px}
