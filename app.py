@@ -9,17 +9,17 @@ from sqlalchemy.sql import column
 
 # Formatted column names
 stats = ['HP_', 'Attack_', 'Defense_', 'Sp_Atk_', 'Sp_Def_', 'Speed_']
-which = ['First', 'Second']
 dummy = ['Type_1_', 'Type_2_', 'Tier_', 'Generation_', 'Legendary_']
 
 # for new sqlite including ALL pokemon file... (remove the "new")
 new_stats = ['HP', 'Attack', 'Defense', 'Sp_Atk', 'Sp_Def', 'Speed']
 new_dummy = ['Type_1', 'Type_2', 'Tier', 'Generation', 'Legendary']
+which = ['First', 'Second']
 
-num = []
+numeric_cols = []
 for w in which:    
     for s in new_stats:
-        num.append(s + '_' + w)
+        numeric_cols.append(s + '_' + w)
 
 # SQLAlchemy setup
 engine = create_engine("sqlite:///Resources/pokemon.sqlite")
@@ -41,10 +41,6 @@ def index():
 # Get predictions
 @app.route('/predict/<poke1>/<poke2>')
 def predict(poke1, poke2):
-
-    # Test pokemon to run
-    #poke2 = 'Mothim'
-    #poke1 = 'Pikachu'
     
     # Create list of the columns we want to query
     sel = []
@@ -68,12 +64,12 @@ def predict(poke1, poke2):
     session.close()
 
     # Get original format of training columns
-    with open('Resources/X_train_cols.h5', 'rb') as stuff:
-        columns = pickle.load(stuff)
+    with open('Resources/X_train_cols.h5', 'rb') as file1:
+        columns = pickle.load(file1)
     cols = [i for i in columns[0]]
         
     # Create a dataframe with the numeric values & correct column names
-    x1 = pd.DataFrame([p1[:6]+p2[:6]], columns=num)
+    numeric = pd.DataFrame([p1[:6]+p2[:6]], columns=numeric_cols)
 
     # Check if our values exist or have been dropped from dummied columns
     p1_cols = []
@@ -99,26 +95,26 @@ def predict(poke1, poke2):
     clms = p1_cols + p2_cols
 
     # Create a dataframe with the dummied categorical values & correct column names
-    x2 = pd.DataFrame(columns=clms, index=[0]).fillna(1)
-    print(x2)
+    categorical = pd.DataFrame(columns=clms, index=[0]).fillna(1)
+    print(categorical)
 
     # Join the two and fill the missing columns with zeros
-    x = pd.concat([x1, x2], axis=1)
-    x = x.reindex(columns=cols).fillna(0)
+    full_stats = pd.concat([numeric, categorical], axis=1)
+    full_stats = full_stats.reindex(columns=cols).fillna(0)
     
     # Use same scaler to convert values as original training dataset
-    with open('Resources/X_scaler.h5', 'rb') as f:
-        scaler = pickle.load(f)
-    data = scaler.transform(x)
+    with open('Resources/X_scaler.h5', 'rb') as file2:
+        scaler = pickle.load(file2)
+    data = scaler.transform(full_stats)
 
     # Load trained model to make the prediction
-    with open('Resources/model.h5', 'rb') as file:
-        model = pickle.load(file)
+    with open('Resources/model.h5', 'rb') as file3:
+        model = pickle.load(file3)
     predictions = model.predict(data)
 
     # Return results
     return jsonify(str(predictions[0]))
-    #return x.to_json()
+    #return full_stats.to_json()
 
 # Run app
 if __name__ == "__main__":
