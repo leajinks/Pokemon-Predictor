@@ -41,6 +41,7 @@ def index():
 # Get predictions
 @app.route('/predict/<poke1>/<poke2>')
 def predict(poke1, poke2):
+
     
     # Create list of the columns we want to query
     sel = []
