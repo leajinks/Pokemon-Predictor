@@ -1,4 +1,4 @@
-,Number,Name,Type_1,Type_2,HP,Attack,Defense,Sp_Atk,Sp_Def,Speed,Generation,Legendary,Tier
+_ID,Number,Name,Type_1,Type_2,HP,Attack,Defense,Sp_Atk,Sp_Def,Speed,Generation,Legendary,Tier
 0,1,Bulbasaur,Grass,Poison,45,49,49,65,65,45,1,0,LC
 1,2,Ivysaur,Grass,Poison,60,62,63,80,80,60,1,0,NFE
 2,3,Venusaur,Grass,Poison,80,82,83,100,100,80,1,0,RU
