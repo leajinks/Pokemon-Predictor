@@ -32,9 +32,7 @@ def index():
 @app.route('/predict/<poke1>/<poke2>')
 def predict(poke1, poke2):
 
-    # Test pokemon to run
-    # poke1 = 'Mothim'
-    # poke2 = 'Charmeleon'
+
     
     # Create list of the columns we want to query
     sel = []
@@ -42,11 +40,14 @@ def predict(poke1, poke2):
         sel.append(s+which[0])
     for d in dummy:
         sel.append(d+which[0])
-
+    
     # Get stats for each pokemon
     session = Session(engine)
     p1 = engine.execute(f'SELECT {sel[0]}, {sel[1]}, {sel[2]}, {sel[3]}, {sel[4]}, {sel[5]}, {sel[6]}, {sel[7]}, {sel[8]}, {sel[9]}, {sel[10]} FROM pokemon WHERE First_Name="{poke1}"').first()
     p2 = engine.execute(f'SELECT {sel[0]}, {sel[1]}, {sel[2]}, {sel[3]}, {sel[4]}, {sel[5]}, {sel[6]}, {sel[7]}, {sel[8]}, {sel[9]}, {sel[10]} FROM pokemon WHERE First_Name="{poke2}"').first()
+    
+    #p = session.query(*sel).filter(pokemon.First_Name==poke1).first()
+
     session.close()
 
     # Get original format of training columns
