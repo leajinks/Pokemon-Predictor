@@ -5,20 +5,30 @@ import pandas as pd
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import Session
 from sqlalchemy import create_engine
-from sqlalchemy.sql import text
+from sqlalchemy.sql import column
 
 # Formatted column names
-num = ['HP_First', 'Attack_First', 'Defense_First', 'Sp_Atk_First', 'Sp_Def_First', 'Speed_First', 'HP_Second', 'Attack_Second', 'Defense_Second', 'Sp_Atk_Second', 'Sp_Def_Second', 'Speed_Second']
 stats = ['HP_', 'Attack_', 'Defense_', 'Sp_Atk_', 'Sp_Def_', 'Speed_']
 which = ['First', 'Second']
 dummy = ['Type_1_', 'Type_2_', 'Tier_', 'Generation_', 'Legendary_']
 
+# for new sqlite including ALL pokemon file... (remove the "new")
+new_stats = ['HP', 'Attack', 'Defense', 'Sp_Atk', 'Sp_Def', 'Speed']
+new_dummy = ['Type_1', 'Type_2', 'Tier', 'Generation', 'Legendary']
+
+num = []
+for w in which:    
+    for s in new_stats:
+        num.append(s + '_' + w)
+
 # SQLAlchemy setup
 engine = create_engine("sqlite:///Resources/pokemon.sqlite")
+# engine = create_engine("sqlite:///Resources/pokemon_with_tiers.sqlite")
 Base = automap_base()
 Base.prepare(engine, reflect=True)
 
 pokemon = Base.classes.pokemon
+#pokemon = Base.classes.pokemon_with_tiers???
 
 # Create app
 app = Flask(__name__)
@@ -39,16 +49,21 @@ def predict(poke1, poke2):
     # Create list of the columns we want to query
     sel = []
     for s in stats:
-        sel.append(s+which[0])
+        sel.append(column(s+which[0]))
+        # sel.append(column(s))
     for d in dummy:
-        sel.append(d+which[0])
+        sel.append(column(d+which[0]))
+        #sel.append(column(s))
     
     # Get stats for each pokemon
     session = Session(engine)
-    p1 = engine.execute(f'SELECT {sel[0]}, {sel[1]}, {sel[2]}, {sel[3]}, {sel[4]}, {sel[5]}, {sel[6]}, {sel[7]}, {sel[8]}, {sel[9]}, {sel[10]} FROM pokemon WHERE First_Name="{poke1}"').first()
-    p2 = engine.execute(f'SELECT {sel[0]}, {sel[1]}, {sel[2]}, {sel[3]}, {sel[4]}, {sel[5]}, {sel[6]}, {sel[7]}, {sel[8]}, {sel[9]}, {sel[10]} FROM pokemon WHERE First_Name="{poke2}"').first()
+    #p1 = engine.execute(f'SELECT {sel[0]}, {sel[1]}, {sel[2]}, {sel[3]}, {sel[4]}, {sel[5]}, {sel[6]}, {sel[7]}, {sel[8]}, {sel[9]}, {sel[10]} FROM pokemon WHERE First_Name="{poke1}"').first()
+    #p2 = engine.execute(f'SELECT {sel[0]}, {sel[1]}, {sel[2]}, {sel[3]}, {sel[4]}, {sel[5]}, {sel[6]}, {sel[7]}, {sel[8]}, {sel[9]}, {sel[10]} FROM pokemon WHERE First_Name="{poke2}"').first()
     
-    #p = session.query(*sel).filter(pokemon.First_Name==poke1).first()
+    p1 = session.query(*sel).filter(pokemon.First_Name==poke1).first()
+    p2 = session.query(*sel).filter(pokemon.First_Name==poke2).first()
+    #p1 = session.query(*sel).filter(pokemon.Name==poke1).first()
+    #p2 = session.query(*sel).filter(pokemon.Name==poke2).first()
 
     session.close()
 
@@ -65,11 +80,21 @@ def predict(poke1, poke2):
     for a in range(len(p1[6:])):
         if dummy[a]+which[0]+'_'+str(p1[6:][a]) in cols:
             p1_cols.append(dummy[a]+which[0]+'_'+str(p1[6:][a]))
+
+    # p1_cols = []
+    # for a in range(len(p1[6:])):
+    #     if dummy[a] + '_' + which[0] + '_' + str(p1[6:][a]) in cols:
+    #         p1_cols.append(dummy[a] + '_' + which[0] + '_' + str(p1[6:][a]))
         
     p2_cols = []
     for b in range(len(p2[6:])):
         if dummy[b]+which[1]+'_'+str(p2[6:][b]) in cols:
             p2_cols.append(dummy[b]+which[1]+'_'+str(p2[6:][b]))
+    
+    # p2_cols = []
+    # for b in range(len(p2[6:])):
+    #     if dummy[b] + '_' + which[1] + '_' + str(p2[6:][b]) in cols:
+    #         p2_cols.append(dummy[b] + '_' + which[1] + '_' + str(p2[6:][b]))
 
     clms = p1_cols + p2_cols
 
