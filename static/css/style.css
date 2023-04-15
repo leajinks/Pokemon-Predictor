@@ -1,3 +1,10 @@
+.navbar-brand {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    margin:0 auto;
+}
+
 /* Side Panels */
 .panel-victor > .panel-heading {
     background-image: none;
@@ -35,7 +42,16 @@
 .Dark {background-color: rgb(112, 88, 72)}
 .Fairy {background-color: rgb(240, 152, 184)}
 
+/* Additional Info */
 .stat-bar {margin-bottom: -15px}
+#pkmn1-trivia-panel {
+    margin-left: -20px;
+    margin-top: 45px
+}
+#pkmn2-trivia-panel {
+    margin-right: -20px;
+    margin-top: 45px
+}
 
 /* Blinking Winner Tag */
 #winner-tag {

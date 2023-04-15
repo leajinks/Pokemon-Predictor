@@ -13,25 +13,33 @@
 
 <body>
     <nav class="navbar navbar-inverse">
-        <div class="container">
-            <header class="navbar-header">
-                <strong class="navbar-brand" href="#">Pokémon Predictor</strong>
-            </header>
-
-            <ul class="nav nav-tabs navbar-nav navbar-right">
-                <li><a class="nav-link" href="#">Home</a></li>
-                <li class="active"><a href="#">Stats</a></li>
-                <li><a href="#">Link</a></li>
-            </ul>
+        <div class="container-fluid">
+            <strong class="navbar-brand justify-content-center" href="#">Pokémon Predictor</strong>
         </div>  
     </nav>
 
     <div class="container">
-        <div id="pkmn1" class="col-md-4"></div>
+        <div class="row">
+            <div id="pkmn1" class="col-md-4"></div>
 
-        <div id="battle" class="col-md-4"><br><br><h3 id="winner-tag">&nbsp;</h3><br><br><br></div>
+            <div id="battle" class="col-md-4"><br><br><h3 id="winner-tag">&nbsp;</h3><br><br><br></div>
 
-        <div id="pkmn2" class="col-md-4"></div>
+            <div id="pkmn2" class="col-md-4"></div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div id="pkmn1-additional-info" class="row">
+                    <div id="pkmn1-stat-box" class="col-md-8"></div>
+                    <div id="pkmn1-trivia" class="col-md-4"></div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div id="pkmn2-additional-info" class="row">
+                    <div id="pkmn2-trivia" class="col-md-4"></div>
+                    <div id="pkmn2-stat-box" class="col-md-8"></div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script src="https://d3js.org/d3.v5.min.js"></script>
