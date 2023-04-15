@@ -98,7 +98,7 @@ function createBattleButton () {
     let button = buttonBox.append("button")
         .attr("type", "button")
         .attr("id", "battle-button")
-        .attr("class", "btn btn-lg center-block")
+        .attr("class", "btn btn-lg btn-dark center-block")
         .attr("onclick", `combat()`);
     button.append("h1").text("\u00A0BATTLE!!!\u00A0");
 }
