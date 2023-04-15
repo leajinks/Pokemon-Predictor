@@ -91,7 +91,6 @@ def predict(poke1, poke2):
 
     # Return results
     return jsonify(str(predictions[0]))
-    #return full_stats.to_json()
 
 # Run app
 if __name__ == "__main__":
