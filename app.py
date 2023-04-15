@@ -8,27 +8,21 @@ from sqlalchemy import create_engine
 from sqlalchemy.sql import column
 
 # Formatted column names
-stats = ['HP_', 'Attack_', 'Defense_', 'Sp_Atk_', 'Sp_Def_', 'Speed_']
-dummy = ['Type_1_', 'Type_2_', 'Tier_', 'Generation_', 'Legendary_']
-
-# for new sqlite including ALL pokemon file... (remove the "new")
-new_stats = ['HP', 'Attack', 'Defense', 'Sp_Atk', 'Sp_Def', 'Speed']
-new_dummy = ['Type_1', 'Type_2', 'Tier', 'Generation', 'Legendary']
+stats = ['HP', 'Attack', 'Defense', 'Sp_Atk', 'Sp_Def', 'Speed']
+dummy = ['Type_1', 'Type_2', 'Tier', 'Generation', 'Legendary']
 which = ['First', 'Second']
 
 numeric_cols = []
 for w in which:    
-    for s in new_stats:
+    for s in stats:
         numeric_cols.append(s + '_' + w)
 
 # SQLAlchemy setup
-engine = create_engine("sqlite:///Resources/pokemon.sqlite")
-# engine = create_engine("sqlite:///Resources/pokemon_with_tiers.sqlite")
+engine = create_engine("sqlite:///Resources/pokemon_with_tiers.sqlite")
 Base = automap_base()
 Base.prepare(engine, reflect=True)
 
-pokemon = Base.classes.pokemon
-#pokemon = Base.classes.pokemon_with_tiers???
+pokemon = Base.classes.poketiers
 
 # Create app
 app = Flask(__name__)
@@ -42,26 +36,17 @@ def index():
 @app.route('/predict/<poke1>/<poke2>')
 def predict(poke1, poke2):
 
-    
     # Create list of the columns we want to query
     sel = []
     for s in stats:
-        sel.append(column(s+which[0]))
-        # sel.append(column(s))
+        sel.append(column(s))
     for d in dummy:
-        sel.append(column(d+which[0]))
-        #sel.append(column(s))
+        sel.append(column(d))
     
     # Get stats for each pokemon
     session = Session(engine)
-    #p1 = engine.execute(f'SELECT {sel[0]}, {sel[1]}, {sel[2]}, {sel[3]}, {sel[4]}, {sel[5]}, {sel[6]}, {sel[7]}, {sel[8]}, {sel[9]}, {sel[10]} FROM pokemon WHERE First_Name="{poke1}"').first()
-    #p2 = engine.execute(f'SELECT {sel[0]}, {sel[1]}, {sel[2]}, {sel[3]}, {sel[4]}, {sel[5]}, {sel[6]}, {sel[7]}, {sel[8]}, {sel[9]}, {sel[10]} FROM pokemon WHERE First_Name="{poke2}"').first()
-    
-    p1 = session.query(*sel).filter(pokemon.First_Name==poke1).first()
-    p2 = session.query(*sel).filter(pokemon.First_Name==poke2).first()
-    #p1 = session.query(*sel).filter(pokemon.Name==poke1).first()
-    #p2 = session.query(*sel).filter(pokemon.Name==poke2).first()
-
+    p1 = session.query(*sel).filter(pokemon.Name==poke1).first()
+    p2 = session.query(*sel).filter(pokemon.Name==poke2).first()
     session.close()
 
     # Get original format of training columns
@@ -72,27 +57,18 @@ def predict(poke1, poke2):
     # Create a dataframe with the numeric values & correct column names
     numeric = pd.DataFrame([p1[:6]+p2[:6]], columns=numeric_cols)
 
-    # Check if our values exist or have been dropped from dummied columns
+    # Check if our values exist or have been dropped from dummied columns for each pokemon
     p1_cols = []
     for a in range(len(p1[6:])):
-        if dummy[a]+which[0]+'_'+str(p1[6:][a]) in cols:
-            p1_cols.append(dummy[a]+which[0]+'_'+str(p1[6:][a]))
-
-    # p1_cols = []
-    # for a in range(len(p1[6:])):
-    #     if dummy[a] + '_' + which[0] + '_' + str(p1[6:][a]) in cols:
-    #         p1_cols.append(dummy[a] + '_' + which[0] + '_' + str(p1[6:][a]))
-        
+        if dummy[a] + '_' + which[0] + '_' + str(p1[6:][a]) in cols:
+            p1_cols.append(dummy[a] + '_' + which[0] + '_' + str(p1[6:][a]))
+    
     p2_cols = []
     for b in range(len(p2[6:])):
-        if dummy[b]+which[1]+'_'+str(p2[6:][b]) in cols:
-            p2_cols.append(dummy[b]+which[1]+'_'+str(p2[6:][b]))
-    
-    # p2_cols = []
-    # for b in range(len(p2[6:])):
-    #     if dummy[b] + '_' + which[1] + '_' + str(p2[6:][b]) in cols:
-    #         p2_cols.append(dummy[b] + '_' + which[1] + '_' + str(p2[6:][b]))
+        if dummy[b] + '_' + which[1] + '_' + str(p2[6:][b]) in cols:
+            p2_cols.append(dummy[b] + '_' + which[1] + '_' + str(p2[6:][b]))
 
+    # Combine the column names for both pokemon
     clms = p1_cols + p2_cols
 
     # Create a dataframe with the dummied categorical values & correct column names
