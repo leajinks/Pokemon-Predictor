@@ -32,9 +32,7 @@ def index():
 @app.route('/predict/<poke1>/<poke2>')
 def predict(poke1, poke2):
 
-    # Test pokemon to run
-    #poke2 = 'Mothim'
-    #poke1 = 'Pikachu'
+
     
     # Create list of the columns we want to query
     sel = []
