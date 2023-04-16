@@ -5,11 +5,11 @@ In this project, Pokemon stats and battle outcome data were analyzed in a machin
 
 
 ## Contributors
-[Becky Klosowski](https://github.com/andcetera)
-[Christin Davis](https://github.com/christinamberdavis)
-[Crystal Butler](https://github.com/cmbutler83)
-[Danielle Anderson](https://github.com/dganderson94)
-[Lea Jinks](https://github.com/leajinks)
+* [Becky Klosowski](https://github.com/andcetera)
+* [Christin Davis](https://github.com/christinamberdavis)
+* [Crystal Butler](https://github.com/cmbutler83)
+* [Danielle Anderson](https://github.com/dganderson94)
+* [Lea Jinks](https://github.com/leajinks)
 
 
 ## How to use the Pokemon Predictor
@@ -46,7 +46,9 @@ The Random Forest model scored well with our dataset, with 93% accuracy and 93-9
 [insert photo here]
 
 ## Analysis
+The following visualizations are available on [Tableau Public.](https://public.tableau.com/app/profile/crystal1427/viz/PokemonStats_16813522570140/PokemonWinnerStats?publish=yes)
 
+![screenshot of attack stats from Tableau](https://github.com/leajinks/Pokemon-Predictor/blob/main/static/img/analysis/atk_stats.png)
 
 
 ## Data Sources
