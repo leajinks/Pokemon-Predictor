@@ -33,7 +33,7 @@ The features of this model include:
 * Pokemon Tier
 * Pokemon Generation
 
-Each Point stat is an integer that ranges from 0-255, depending on the stat and the pokemon. The Pokemon Type, Tier, and Generations are strings, with 16 possible primary and secondary types, 13 possible tiers, and 5 possible generations.
+Each Point stat is an integer that ranges from 0-255, depending on the stat and the pokemon. The Pokemon Type, Tier, and Generations are strings, with 18 possible primary and secondary types, 13 possible tiers, and 5 possible generations.
 
 With two sets of stats per row, and each string value converted to an individual feature, our model in total includes 118 features.
 
@@ -52,4 +52,9 @@ The Random Forest model scored well with our dataset, with 93% accuracy and 93-9
 ## Data Sources
 Pokemon and Battle Data: [Tuan Nguyen Van Anh via Kaggle](
 https://www.kaggle.com/datasets/tuannguyenvananh/pokemon-dataset-with-team-combat?select=pokemon.csv)
+
 Pokemon Tiers: [Smogon](https://www.smogon.com/dex/xy/pokemon/)
+
+Artwork: 
+Gathered by [Rohan Asokan via Kaggle](https://www.kaggle.com/datasets/arenagrenade/the-complete-pokemon-images-data-set)
+and supplemented with images from [Bulbapedia](https://bulbapedia.bulbagarden.net/wiki/Main_Page)
