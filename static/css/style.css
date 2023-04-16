@@ -83,5 +83,13 @@
     color: white;
 }
 #battle-button > h1 {margin-top: 10px}
+/* https://stackoverflow.com/a/55597165/20258097 for button click animation */
+#battle-button:not(:disabled):not(:disabled):active {
+    background-color: indigo;
+}
+#battle-button:not(:disabled):not(:disabled):active > h1 {
+    margin-top: 11px;
+    margin-bottom: 9px;
+} 
 
 #tiering-overview > h3 {margin-top: 5px}
