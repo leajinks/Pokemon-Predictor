@@ -73,7 +73,6 @@ def predict(poke1, poke2):
 
     # Create a dataframe with the dummied categorical values & correct column names
     categorical = pd.DataFrame(columns=clms, index=[0]).fillna(1)
-    print(categorical)
 
     # Join the two and fill the missing columns with zeros
     full_stats = pd.concat([numeric, categorical], axis=1)
