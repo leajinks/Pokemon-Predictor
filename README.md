@@ -43,20 +43,29 @@ For our ML model, we used Random Forest, which combines multiple decision trees.
 
 The Random Forest model scored well with our dataset, with 93% accuracy and 93-94% precision. 
 
-[insert photo here]
+![screenshot of ml model results](https://github.com/leajinks/Pokemon-Predictor/blob/main/static/img/analysis/ml_results.png)
 
 ## Analysis
 The following visualizations are available on [Tableau Public.](https://public.tableau.com/app/profile/crystal1427/viz/PokemonStats_16813522570140/PokemonWinnerStats?publish=yes)
 
-![screenshot of attack stats from Tableau](https://github.com/leajinks/Pokemon-Predictor/blob/main/static/img/analysis/atk_stats.png)
+Win rates for all generations hovered around 50%. The largest gap in win percentage is between generations 2 and 4, 4 being 8.5% higher than 2.
 
+![screenshot of generation stats from Tableau](https://github.com/leajinks/Pokemon-Predictor/blob/main/static/img/analysis/gen_stats.png)
+
+A higher battle stat equates to an advantage for a Pokemon over one with a lower stat, so one might expect a positive correlation between increasing stats and win percentages. However, for all battle stats (attack, defense, HP, speed, special attack, special defense), Pokemon in the median range of these values performed better than Pokemon with high or low values. This is generally due to Pokemon being created with a balanced set of advantages and disadvantages, so one particular Pokemon doesn't obliterate the rest. For example, Geodude, a rock pokemon, has relatively high attack and defense, but low HP, speed, special attack, and special defense.
+
+![screenshot of attack stats from Tableau](https://github.com/leajinks/Pokemon-Predictor/blob/main/static/img/analysis/atk_stats.png)
+![screenshot of defense stats from Tableau](https://github.com/leajinks/Pokemon-Predictor/blob/main/static/img/analysis/def_stats.png)
+![screenshot of HP stats from Tableau](https://github.com/leajinks/Pokemon-Predictor/blob/main/static/img/analysis/hp_stats.png)
+![screenshot of special attack stats from Tableau](https://github.com/leajinks/Pokemon-Predictor/blob/main/static/img/analysis/spatk_stats.png)
+![screenshot of special defense stats from Tableau](https://github.com/leajinks/Pokemon-Predictor/blob/main/static/img/analysis/spdef_stats.png)
 
 ## Data Sources
-Pokemon and Battle Data: [Tuan Nguyen Van Anh via Kaggle](
+* Pokemon and Battle Data: [Tuan Nguyen Van Anh via Kaggle](
 https://www.kaggle.com/datasets/tuannguyenvananh/pokemon-dataset-with-team-combat?select=pokemon.csv)
 
-Pokemon Tiers: [Smogon](https://www.smogon.com/dex/xy/pokemon/)
+* Pokemon Tiers: [Smogon](https://www.smogon.com/dex/xy/pokemon/)
 
 Artwork: 
-Gathered by [Rohan Asokan via Kaggle](https://www.kaggle.com/datasets/arenagrenade/the-complete-pokemon-images-data-set)
+* Gathered by [Rohan Asokan via Kaggle](https://www.kaggle.com/datasets/arenagrenade/the-complete-pokemon-images-data-set)
 and supplemented with images from [Bulbapedia](https://bulbapedia.bulbagarden.net/wiki/Main_Page)
