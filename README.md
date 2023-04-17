@@ -21,7 +21,7 @@ In this project, Pokemon stats and battle outcome data were analyzed in a machin
 
 ## How to use the Pokemon Predictor
 
-1. Run the data_prep.ipynb file. This will read the pokemon.csv and combats.csv, scrape Pokemon tier data from smogon.com, combine this data into one dataframe with one row per battle, then convert this into a sqlite file.
+1. Run the data_prep_final.ipynb file. This will read the pokemon.csv and combats.csv, scrape Pokemon tier data from smogon.com, combine this data into one dataframe with one row per battle, then convert this into a sqlite file.
 2. Run the ml_model.ipynb file. This will split the data from the sqlite file into training and test sets, assign targets and features, scale the data, create logistic regression models to calculate model accuracy, and serialize the model using Pickle so it can be run on a flask app.
 3. Run python app.py to open the flask app locally within a virtual environment including the relevant pacakges, or visit our cloud deployment at the link listed above.  Required packages include:  
 
