@@ -6,9 +6,13 @@ In this project, Pokemon stats and battle outcome data were analyzed in a machin
 
 ## Cloud Deployment
 
-[Pokemon Predictor Webpage](http://ec2-3-14-73-36.us-east-2.compute.amazonaws.com)  
+**Try our app out here:** [Pokemon Predictor](http://ec2-3-14-73-36.us-east-2.compute.amazonaws.com)  
 
-![Pokemon Predictor Webpage screenshot](Images/website_screenshot.png)
+![Pokemon Predictor Webpage screenshot](Images/website_screenshot.png)  
+Webpage screenshot  
+
+![Ecosystem Workflow Diagram](Images/Project%204%20Ecosystem%20Scaler.png)  
+Ecosystem diagram
 
 ## Contributors
 
