@@ -1,5 +1,7 @@
 # AWS EC2 Cloud Connection Steps
 
+written by Becky Klosowski
+
 - - -
 
 ## Connecting to your Instance
@@ -46,7 +48,9 @@
     - scikit-learn
     - pathlib
 
-6. Secure copy of relevant files from our local repo into the remote instance:
+## Create/Copy Our Project
+
+1. Secure copy of relevant files from our local repo into the remote instance:
 
     - `scp -i <Filepath_to_KeyPair.pem> <Filepath_to_file_we_wish_to_copy> <EC2_instance_address>:~/pokemon`
     - These files include:
@@ -61,7 +65,7 @@
             - `pokemon_with_tiers.sqlite`
             - `pokemon_with_tiers.json`
 
-7. Can do a test run of `python3.7 app.py` here to verify you get the expected result in the terminal at this point, but will likely not see any result in a browser yet.  `Ctrl-C` to quit.
+2. Can do a test run of `python3.7 app.py` here to verify you get the expected result in the terminal at this point, but will likely not see any result in a browser yet.  `Ctrl-C` to quit.
 
 ## WSGI - Web Server Gateway Interface Setup
 
@@ -132,3 +136,18 @@ location / {
   - `sudo systemctl restart nginx`
   - Copying Public IPv4 DNS info into a browser should now bring up our fully functional website.
   - You can also run `sudo systemctl status pokemon` for some interesting status information.
+
+- - -
+
+## Resources
+
+Vincent Stevenson
+[Creating a Flask Web Server in EC2 on the AWS Free Tier from scratch!](https://www.youtube.com/watch?v=z5XiVh6v4uI)
+
+[How to Deploy Flask Application with Nginx and Gunicorn on Ubuntu 20.04](https://www.rosehosting.com/blog/how-to-deploy-flask-application-with-nginx-and-gunicorn-on-ubuntu-20-04/)
+
+[Transferring Files between your laptop and Amazon instance](https://angus.readthedocs.io/en/2014/amazon/transfer-files-between-instance.html)
+
+[How to install python3.7 and create a virtualenv with pip on Ubuntu 18.04?](https://stackoverflow.com/questions/53070868/how-to-install-python3-7-and-create-a-virtualenv-with-pip-on-ubuntu-18-04)
+
+[Finding the PID of the Process Using a Specific Port](https://www.baeldung.com/linux/find-process-using-port)
