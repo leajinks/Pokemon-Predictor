@@ -13,29 +13,90 @@
 
 <body>
     <nav class="navbar navbar-inverse">
-        <div class="container">
-            <header class="navbar-header">
-                <strong class="navbar-brand" href="#">Pokémon Predictor</strong>
-            </header>
-
-            <ul class="nav nav-tabs navbar-nav navbar-right">
-                <li><a class="nav-link" href="#">Home</a></li>
-                <li class="active"><a href="#">Stats</a></li>
-                <li><a href="#">Link</a></li>
-            </ul>
+        <div class="container-fluid">
+            <strong class="navbar-brand justify-content-center" href="#">Pokémon Predictor</strong>
         </div>  
     </nav>
 
     <div class="container">
-        <div id="pkmn1" class="col-md-4"></div>
+        <div class="row">
+            <div id="pkmn1" class="col-md-4"></div>
 
-        <div id="battle" class="col-md-4"><br><br><h3 id="winner-tag">&nbsp;</h3><br><br><br></div>
+            <div id="battle" class="col-md-4">
+                <br>
+                <br>
+                <h3 id="winner-tag">&nbsp;</h3>
+                <br>
+                <br>
+                <br>
+            </div>
 
-        <div id="pkmn2" class="col-md-4"></div>
+            <div id="pkmn2" class="col-md-4"></div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div id="pkmn1-additional-info" class="row">
+                    <div id="pkmn1-stat-box" class="col-md-8"></div>
+                    <div id="pkmn1-trivia" class="col-md-4"></div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div id="pkmn2-additional-info" class="row">
+                    <div id="pkmn2-trivia" class="col-md-4"></div>
+                    <div id="pkmn2-stat-box" class="col-md-8"></div>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div id="tiering-overview" class="col-md-4">
+                <h3>Tiering Overview</h3>
+                <p>
+                    Smogon is a competititve Pokémon battling community that organizes Pokémon by
+                    tiers based on their usage. Pokémon of a certain tier are banned from lower
+                    tiers, to allow Pokémon in those tiers to be able to battle against Pokémon of
+                    similar power. Occasionally, Pokémon have to be banned from a tier by the
+                    community due to being game-breaking in one tier but not being used often enough
+                    in the tier above. There are also additional tier designations for Pokémon that
+                    only see use in certain formats.
+                </p>
+            </div>
+            <div id="tier-list" class="col-md-2">
+                <h4>Tiers:</h4>
+                <ol>
+                    <li>OU (OverUsed)</li>
+                    <li>UU (UnderUsed)</li>
+                    <li>RU (RarelyUsed)</li>
+                    <li>NU (NeverUsed)</li>
+                    <li>PU (Because they stink)</li>
+                </ol>
+            </div>
+            <div id="ban-lists" class="col-md-2">
+                <h4>Banlists:</h4>
+                <ol>
+                    <li>Uber (OUBL)</li>
+                    <li>UUBL</li>
+                    <li>RUBL</li>
+                    <li>NUBL</li>
+                    <li>PUBL</li>
+                </ol>
+            </div>
+            <div id="other-formats" class="col-md-4">
+                <h4>Other Tiers:</h4>
+                <ul>
+                    <li>AG (Anything Goes) – Every rule except "don't do anything that makes the
+                        battle last indefinitely" is lifted. One Pokémon, Mega Rayquaza, can only be
+                        used in this format.</li>
+                    <li>NFE (Not Fully Evolved) – Pokémon that can still evolve</li>
+                    <li>LC (Little Cup) – Pokémon that have never evolved, but can</li>
+                    <li>Untiered – Pokémon who players are strongly advised not to use, due to low
+                        power</li>
+                </ul>
+            </div>
+        </div>
     </div>
 
     <script src="https://d3js.org/d3.v5.min.js"></script>
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script type="text/javascript" src="../static/js/pokemon_with_tiers.js"></script>
     <script src="../static/js/app.js"></script>
     <link rel="stylesheet" type="text/css" href="../static/css/style.css">
