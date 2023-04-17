@@ -73,7 +73,19 @@ For our ML model, we used Random Forest, which combines multiple decision trees.
 
 The Random Forest model scored well with our dataset, with 93% accuracy and 93-94% precision. 
 
-![screenshot of ml model results](Images/analysis/ml_results.png)
+##### Accuracy Score:
+0.9320319897754277
+
+
+##### Classification Report:
+              precision    recall  f1-score   support
+
+           0       0.93      0.94      0.93     10797
+           1       0.94      0.93      0.93     10884
+
+    accuracy                           0.93     21681
+    macro avg       0.93      0.93      0.93     21681
+    weighted avg       0.93      0.93      0.93     21681
 
 ### Other Models
 
@@ -82,8 +94,10 @@ To ensure the best results, we tried multiple ML models on the data to see which
 #### Logistic Regression
 Logistic regression scored second highest as far as accuracy, precision, and recall. 
 
-Accuracy Score: 0.8828469148656988
-Classification Report:
+##### Accuracy Score: 
+0.8828469148656988
+
+##### Classification Report:
               precision    recall  f1-score   support
 
            0       0.88      0.89      0.88     10840
@@ -96,8 +110,10 @@ Classification Report:
 #### K Nearest Neighbors
 K Nearest Neighbors did not perform as well as Random Forest or Logistic Regression.
 
-Accuracy Score : 0.7630712917788084
-Classification Report
+##### Accuracy Score : 
+0.7630712917788084
+
+##### Classification Report
               precision    recall  f1-score   support
 
            0       0.72      0.85      0.78     10867
