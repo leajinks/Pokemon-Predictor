@@ -19,7 +19,7 @@ In this project, Pokemon stats and battle outcome data were analyzed in a machin
 4. Select Pokemon in both dropdown menus, then click the Battle button. A "Winner!" label will appear next to the photo of the Pokemon predicted to win.
 
 ## Target and Features
-Since the purpose of this model is to predict Pokemon success in battle, the target is the "Did_the_first_pokemon_win" column.
+Since the purpose of this model is to predict Pokemon success in battle, the target is the "Did_the_first_pokemon_win" column. That is, we are classifying the first pokemon in the battle as a winner or loser of the battle. 
 
 The features of this model include:
 * Hit Points (HP)
@@ -38,12 +38,25 @@ Each Point stat is an integer that ranges from 0-255, depending on the stat and 
 With two sets of stats per row, and each string value converted to an individual feature, our model in total includes 118 features.
 
 
-## Model and Scoring
+## Classification Model
 For our ML model, we used Random Forest, which combines multiple decision trees. By aggregating the predictions of many individual decision trees, it reduces overfitting and improves generalization performance.
+
+* High accuracy: Random Forest can produce highly accurate results, even with large and complex datasets, due to its ability to handle multiple features.
+* Robustness: Random Forest is less prone to overfitting than other algorithms, such as decision trees, because it creates multiple decision trees and averages their results to make predictions, which helps to reduce the variance in the model. We configured our model to use 50 estimators. 
+** 50 estimators produced results almost as well as 500 estimators, but better than 75 or 100, and with better performance.
+* Feature selection: Random Forest can be used to identify the most important features in a dataset, which can be useful for feature selection and feature engineering.
+* Scalability: Random Forest can be used with large datasets, making it suitable for big data applications.
+*Interpretability: Random Forest can provide insights into how the model makes predictions, which can help to explain the underlying relationships in the data.
 
 The Random Forest model scored well with our dataset, with 93% accuracy and 93-94% precision. 
 
 ![screenshot of ml model results](https://github.com/leajinks/Pokemon-Predictor/blob/main/static/img/analysis/ml_results.png)
+
+### Other Models
+To ensure the best results, we tried multiple ML models on the data to see which was best suited to correctly classifying the data. 
+
+#### Logistic Regression
+#### K Nearest Neighbots
 
 ## Analysis
 The following visualizations are available on [Tableau Public.](https://public.tableau.com/app/profile/crystal1427/viz/PokemonStats_16813522570140/PokemonWinnerStats?publish=yes)
