@@ -66,11 +66,10 @@ With two sets of stats per row, and each string value converted to an individual
 For our ML model, we used Random Forest, which combines multiple decision trees. By aggregating the predictions of many individual decision trees, it reduces overfitting and improves generalization performance.
 
 * High accuracy: Random Forest can produce highly accurate results, even with large and complex datasets, due to its ability to handle multiple features.
-* Robustness: Random Forest is less prone to overfitting than other algorithms, such as decision trees, because it creates multiple decision trees and averages their results to make predictions, which helps to reduce the variance in the model. We configured our model to use 50 estimators. 
-** 50 estimators produced results almost as well as 500 estimators, but better than 75 or 100, and with better performance.
+* Robustness: Random Forest is less prone to overfitting than other algorithms, such as decision trees, because it creates multiple decision trees and averages their results to make predictions, which helps to reduce the variance in the model. 
+    * We configured our model to use 50 estimators. 
+    * 50 estimators produced results almost as well as 500 estimators, but better than 75 or 100, and with better performance.
 * Feature selection: Random Forest can be used to identify the most important features in a dataset, which can be useful for feature selection and feature engineering.
-* Scalability: Random Forest can be used with large datasets, making it suitable for big data applications.
-*Interpretability: Random Forest can provide insights into how the model makes predictions, which can help to explain the underlying relationships in the data.
 
 The Random Forest model scored well with our dataset, with 93% accuracy and 93-94% precision. 
 
@@ -81,8 +80,32 @@ The Random Forest model scored well with our dataset, with 93% accuracy and 93-9
 To ensure the best results, we tried multiple ML models on the data to see which was best suited to correctly classifying the data. 
 
 #### Logistic Regression
+Logistic regression scored second highest as far as accuracy, precision, and recall. 
 
-#### K Nearest Neighbots
+Accuracy Score: 0.8828469148656988
+Classification Report:
+              precision    recall  f1-score   support
+
+           0       0.88      0.89      0.88     10840
+           1       0.89      0.88      0.88     10841
+
+    accuracy                           0.88     21681
+    macro avg       0.88      0.88      0.88     21681
+    weighted avg       0.88      0.88      0.88     21681
+
+#### K Nearest Neighbors
+K Nearest Neighbors did not perform as well as Random Forest or Logistic Regression.
+
+Accuracy Score : 0.7630712917788084
+Classification Report
+              precision    recall  f1-score   support
+
+           0       0.72      0.85      0.78     10867
+           1       0.82      0.67      0.74     10814
+
+    accuracy                           0.76     21681
+    macro avg       0.77      0.76      0.76     21681
+    weighted avg       0.77      0.76      0.76     21681
 
 ## Analysis
 
