@@ -106,7 +106,7 @@ WantedBy=multi-user.target
     - `sudo apt-get install nginx`
     - `sudo systemctl start nginx`
     - `sudo systemctl enable nginx`
-    - Can test by copying Public IPv4 DNS from AWS EC2 Instance into a browser, should see an nginx informational page come up at this point.
+    - Can test by copying Public IPv4 DNS info from AWS EC2 Instance into a browser, should see an nginx informational page come up at this point.
 
 2. Adjust configuration settings:
 
@@ -130,5 +130,5 @@ location / {
 - to save, Ctrl-O, Enter, Ctrl-X
 
   - `sudo systemctl restart nginx`
-  - Copying Public IPv4 DNS into a browser should now bring up our fully functional website.
+  - Copying Public IPv4 DNS info into a browser should now bring up our fully functional website.
   - You can also run `sudo systemctl status pokemon` for some interesting status information.
